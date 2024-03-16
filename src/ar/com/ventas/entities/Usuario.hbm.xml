@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.Usuario" schema="ventas_damico" table="usuario">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="codigo" type="integer" column="CODIGO" unique="true"/>
+        <property name="nombre" type="string" column="NOMBRE"/>
+        <property name="password" type="string" column="PASSWORD"/>
+        <property name="administrador" type="boolean" column="ADMINISTRADOR"/>
+        <property name="activo" type="boolean" column="ACTIVO"/>
+        <property name="visible" type="boolean" column="VISIBLE"/>
+        <many-to-one name="perfil"
+                    class="ar.com.ventas.entities.Perfil"
+                     lazy="false">
+                     <column name="ID_PERFIL" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

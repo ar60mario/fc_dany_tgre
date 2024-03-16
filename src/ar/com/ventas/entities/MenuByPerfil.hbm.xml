@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.MenuByPerfil" schema="ventas_damico" table="menu_by_pefil">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="codigo" type="integer" column="CODIGO"/>
+        <property name="nombre" type="string" column="NOMBRE"/>
+        <property name="subMenu" type="string" column="SUB_MENU"/>
+        <property name="habilitado" type="boolean" column="HABILITADO"/>
+        <many-to-one name="perfil"
+                    class="ar.com.ventas.entities.Perfil"
+                     lazy="false">
+                     <column name="ID_PERFIL" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
