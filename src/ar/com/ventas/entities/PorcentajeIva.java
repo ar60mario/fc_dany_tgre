@@ -1,26 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.entities;
 
 /**
  *
  * @author argia
  */
-public class Iva {
+public class PorcentajeIva {
     private Long id;
     private Integer codigo;
+    private String detalle;
     private Float porcentaje;
     private Boolean activo;
 
-    public Iva() {
+    public PorcentajeIva() {
     }
 
-    public Iva(Long id, Integer codigo, Float porcentaje, Boolean activo) {
+    public PorcentajeIva(Long id, Integer codigo, String detalle, Float porcentaje, Boolean activo) {
         this.id = id;
         this.codigo = codigo;
+        this.detalle = detalle;
         this.porcentaje = porcentaje;
         this.activo = activo;
     }
@@ -41,6 +38,14 @@ public class Iva {
         this.codigo = codigo;
     }
 
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
+    }
+
     public Float getPorcentaje() {
         return porcentaje;
     }
@@ -56,5 +61,6 @@ public class Iva {
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
+    
     
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.Stock" schema="ventas_damico" table="stock">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="stockActual" type="integer" column="STOCK_ACTUAL"/>
+        <property name="stockMinimo" type="integer" column="STOCK_MINIMO"/>
+        <property name="puntoPedido" type="integer" column="PUNTO_PEDIDO"/>
+        <property name="unidad" type="integer" column="UNIDAD"/>
+        <property name="caja" type="integer" column="CAJA"/>
+        <property name="bulto" type="integer" column="BULTO"/>
+        
+    </class>
+</hibernate-mapping>

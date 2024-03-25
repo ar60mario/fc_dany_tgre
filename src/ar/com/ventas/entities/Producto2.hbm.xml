@@ -10,49 +10,41 @@
         <property name="codigo" type="integer" column="CODIGO" unique="true"/>
         <property name="detalle" type="string" column="DETALLE"/>
         <property name="activo" type="boolean" column="ACTIVO"/>
-        <property name="unidad" type="boolean" column="UNIDAD"/>
-        <property name="cantidadCaja" type="integer" column="CANTIDAD_CAJA"/>
-        <property name="costo" type="double" column="COSTO"/>
-        <property name="cantidadPorBulto" type="integer" column="CANTIDAD_POR_BULTO"/>
-        <property name="dcto" type="float" column="DCTO"/>
-        <property name="margenAyM" type="float" column="MARGEN_AYM"/>
-        <property name="MargenCli" type="float" column="MARGEN_CLI"/>
-        <property name="fechaUltima" type="date" column="FECHA_ULTIMA"/>
+        <property name="unidadFraccion" type="boolean" column="UNIDAD"/>
+        <property name="unidadCaja" type="integer" column="CANTIDAD_CAJA"/>
+        <property name="cajasPorBulto" type="integer" column="CANTIDAD_CAJA"/>
         <property name="actualizarWeb" type="boolean" column="ACTUALIZAR_WEB"/>
         <property name="actualizarGondola" type="boolean" column="ACTUALIZAR_GONDOLA"/>
         <property name="actualizarListaPrecios" type="boolean" column="ACTUALIZAR_LISTA_PRECIOS"/>
-        <property name="bloqueado" type="boolean" column="BLOQUEADO"/>
-        <property name="terminal" type="integer" column="TERMINAL"/>
         <property name="listaPdf" type="boolean" column="LISTA_PDF"/>
+        <property name="fechaActualiz" type="date" column="FECHA_ULTIMA"/>
+        <property name="costo" type="double" column="COSTO"/>
+        <property name="cantidadPorBulto" type="integer" column="CANTIDAD_POR_BULTO"/>
         <many-to-one name="precio"
                     class="ar.com.ventas.entities.Precio"
                      lazy="false">
-                     <column name="ID_PRECIO" not-null="false"/>
+                     <column name="ID_PRECIO" not-null="true"/>
         </many-to-one>
         <many-to-one name="stock"
                     class="ar.com.ventas.entities.Stock"
                      lazy="false">
-                     <column name="ID_STOCK" not-null="false"/>
+                     <column name="ID_STOCK" not-null="true"/>
         </many-to-one>
         <many-to-one name="rubro"
                     class="ar.com.ventas.entities.Rubro2"
                      lazy="false">
-                     <column name="ID_RUBRO" not-null="false"/>
+                     <column name="ID_RUBRO" not-null="true"/>
         </many-to-one>
         <many-to-one name="subRubro"
                     class="ar.com.ventas.entities.SubRubro2"
                      lazy="false">
-                     <column name="ID_SUB_RUBRO" not-null="false"/>
+                     <column name="ID_SUB_RUBRO" not-null="true"/>
         </many-to-one>
         <many-to-one name="proveedor"
-                    class="ar.com.ventas.entities.Proveedor"
+                    class="ar.com.ventas.entities.Proveedor2"
                      lazy="false">
-                     <column name="ID_PROVEEDOR" not-null="false"/>
+                     <column name="ID_PROVEEDOR" not-null="true"/>
         </many-to-one>
-        <many-to-one name="porcIva"
-                    class="ar.com.ventas.entities.PorcIva"
-                     lazy="false">
-                     <column name="ID_PORC_IVA" not-null="false"/>
-        </many-to-one>
+        
     </class>
 </hibernate-mapping>

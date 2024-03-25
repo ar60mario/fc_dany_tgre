@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.Precio" schema="ventas_damico" table="precio">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="precio1" type="double" column="PRECIO_1"/>
+        <property name="precio2" type="double" column="PRECIO_2"/>
+        <property name="precio3" type="double" column="PRECIO_3"/>
+        <property name="precio4" type="double" column="PRECIO_4"/>
+        <property name="precio5" type="double" column="PRECIO_5"/>
+        <property name="precio6" type="double" column="PRECIO_6"/>
+        <property name="precio7" type="double" column="PRECIO_7"/>
+        <property name="porcentaje1" type="double" column="PORCENTAJE_1"/>
+        <property name="porcentaje2" type="double" column="PORCENTAJE_2"/>
+        <property name="porcentaje3" type="double" column="PORCENTAJE_3"/>
+        <property name="porcentaje4" type="double" column="PORCENTAJE_4"/>
+        <property name="porcentaje5" type="double" column="PORCENTAJE_5"/>
+        <property name="porcentaje6" type="double" column="PORCENTAJE_6"/>
+        <property name="porcentaje7" type="double" column="PORCENTAJE_7"/>
+        <property name="impuesto" type="double" column="IMPUESTO"/>
+        <property name="costo" type="double" column="COSTO"/>
+        <property name="sugerido" type="double" column="SUGERIDO"/>
+        <property name="fechaActualizacion" type="date" column="FECHA_ACTUALIZACION"/>
+        <many-to-one name="porcentajeIva"
+                    class="ar.com.ventas.entities.PorcentajeIva"
+                     lazy="false">
+                     <column name="ID_PORCENTAJE_IVA" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

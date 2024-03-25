@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.main;
 
 import ar.com.ventas.entities.EquipoActivo;
@@ -10,8 +5,8 @@ import ar.com.ventas.entities.MenuByPerfil;
 import ar.com.ventas.entities.Perfil;
 import ar.com.ventas.entities.Usuario;
 import ar.com.ventas.frame.AbmPerfilFrame;
-import ar.com.ventas.frame.NuevoPerfilFrame;
 import ar.com.ventas.frame.AbmProductosFrame;
+import ar.com.ventas.frame.NuevoPerfilFrame;
 import ar.com.ventas.frame.AbmUsuarioFrame;
 import ar.com.ventas.frame.MenuByPerfilFrame;
 import ar.com.ventas.services.EquipoActivoService;
@@ -66,6 +61,7 @@ public class MainFrame extends javax.swing.JFrame {
         proveedoresMnu = new javax.swing.JMenuItem();
         usuariosMnu = new javax.swing.JMenuItem();
         perfilesMnu = new javax.swing.JMenuItem();
+        porcentIvaMnu = new javax.swing.JMenuItem();
         herramientasMenu = new javax.swing.JMenu();
         modificarPerfilesMnu = new javax.swing.JMenuItem();
         aMnu = new javax.swing.JMenu();
@@ -109,12 +105,27 @@ public class MainFrame extends javax.swing.JFrame {
         archivoMnu.add(productosMnu);
 
         rubrosMnu.setText("RUBROS");
+        rubrosMnu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rubrosMnuActionPerformed(evt);
+            }
+        });
         archivoMnu.add(rubrosMnu);
 
         subRubrosMnu.setText("SUB RUBROS");
+        subRubrosMnu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subRubrosMnuActionPerformed(evt);
+            }
+        });
         archivoMnu.add(subRubrosMnu);
 
         proveedoresMnu.setText("PROVEEDORES");
+        proveedoresMnu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proveedoresMnuActionPerformed(evt);
+            }
+        });
         archivoMnu.add(proveedoresMnu);
 
         usuariosMnu.setText("USUARIOS");
@@ -132,6 +143,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         archivoMnu.add(perfilesMnu);
+
+        porcentIvaMnu.setText("PORC.IVA");
+        porcentIvaMnu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                porcentIvaMnuActionPerformed(evt);
+            }
+        });
+        archivoMnu.add(porcentIvaMnu);
 
         jMenuBar1.add(archivoMnu);
 
@@ -218,8 +237,23 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void modificarPerfilesMnuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarPerfilesMnuActionPerformed
         menuByPerfil();
-        
     }//GEN-LAST:event_modificarPerfilesMnuActionPerformed
+
+    private void rubrosMnuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rubrosMnuActionPerformed
+        rubros();
+    }//GEN-LAST:event_rubrosMnuActionPerformed
+
+    private void subRubrosMnuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subRubrosMnuActionPerformed
+        subRubros();
+    }//GEN-LAST:event_subRubrosMnuActionPerformed
+
+    private void proveedoresMnuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proveedoresMnuActionPerformed
+        proveedores();
+    }//GEN-LAST:event_proveedoresMnuActionPerformed
+
+    private void porcentIvaMnuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porcentIvaMnuActionPerformed
+        porcentualesIva();
+    }//GEN-LAST:event_porcentIvaMnuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,6 +298,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem modificarPerfilesMnu;
     private javax.swing.JMenuItem perfilesMnu;
+    private javax.swing.JMenuItem porcentIvaMnu;
     private javax.swing.JMenuItem productosMnu;
     private javax.swing.JMenuItem proveedoresMnu;
     private javax.swing.JMenuItem rubrosMnu;
@@ -444,11 +479,20 @@ public class MainFrame extends javax.swing.JFrame {
         mbpf.setVisible(true);
         this.dispose();
     }
-}
-/*
 
-        System.out.println(str1);
-        String str2 = str1.substring(0, 3);
+    private void rubros() {
         
-        String str4 = str1.substring(9, str1.length());
- */
+    }
+
+    private void subRubros() {
+        
+    }
+
+    private void proveedores() {
+        
+    }
+
+    private void porcentualesIva() {
+        
+    }
+}
