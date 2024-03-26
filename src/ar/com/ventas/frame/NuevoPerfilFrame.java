@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.frame;
 
 import ar.com.ventas.entities.Perfil;
@@ -146,9 +141,9 @@ public class NuevoPerfilFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_volverBtnActionPerformed
 
     private void asignarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignarBtnActionPerformed
-        MenuByPerfilFrame mbpf = new MenuByPerfilFrame(pe2);
-        mbpf.setVisible(true);
-        this.dispose();
+//        MenuByPerfilFrame mbpf = new MenuByPerfilFrame(pe2);
+//        mbpf.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_asignarBtnActionPerformed
 
     private void grabarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grabarBtnActionPerformed
@@ -224,7 +219,7 @@ public class NuevoPerfilFrame extends javax.swing.JFrame {
                 Constantes.getB()));
         nombreTxt.setText("");
         codigoTxt.setText("");
-        asignarBtn.setEnabled(false);
+        asignarBtn.setVisible(false);
         usuarioTxt.setText(UtilFrame.getUsuario());
     }
 
@@ -235,14 +230,15 @@ public class NuevoPerfilFrame extends javax.swing.JFrame {
             pe.setActivo(true);
             pe.setCodigo(Integer.valueOf(codigoTxt.getText()));
             pe.setNombre(nombreTxt.getText());
+            
             try {
                 pe2 = new PerfilService().savePerfil(pe);
             } catch (Exception ex) {
                 Logger.getLogger(NuevoPerfilFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-            asignarBtn.setEnabled(true);
-            volverBtn.setEnabled(false);
-            grabarBtn.setEnabled(false);
+//            asignarBtn.setEnabled(true);
+//            volverBtn.setEnabled(false);
+//            grabarBtn.setEnabled(false);
         }
     }
 

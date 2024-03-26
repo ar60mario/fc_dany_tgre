@@ -1,6 +1,6 @@
 package ar.com.ventas.frame;
 
-import ar.com.ventas.entities.Proveedor;
+import ar.com.ventas.entities.Proveedor2;
 import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.Proveedor2Service;
 import java.util.List;
@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AbmProveedoresFrame extends javax.swing.JFrame {
 
-    private List<Proveedor> proveedores;
+    private List<Proveedor2> proveedores;
 
     /**
      * Creates new form AbmProveedoresFrame
@@ -222,9 +222,9 @@ public class AbmProveedoresFrame extends javax.swing.JFrame {
         proveedores = null;
         try {
             if (numericoRb.isSelected()) {
-                proveedores = new Proveedor2Service().getAllProveedoresActivosByCodigo();
+                proveedores = new Proveedor2Service().getProveedoresActivos();
             } else {
-                proveedores = new Proveedor2Service().getAllProveedoresActivosByNombre();
+                proveedores = new Proveedor2Service().getProveedoresActivosOrdenNombre();
             }
 
         } catch (Exception ex) {
@@ -232,10 +232,10 @@ public class AbmProveedoresFrame extends javax.swing.JFrame {
         }
         if (proveedores != null && !proveedores.isEmpty()) {
             DefaultTableModel tbl = (DefaultTableModel) tablaProveedores.getModel();
-            for (Proveedor pro : proveedores) {
+            for (Proveedor2 pro : proveedores) {
                 Object ob[] = new Object[2];
                 ob[0] = pro.getCodigo();
-                ob[1] = pro.getRazonSocial();
+                ob[1] = pro.getNombre();
                 tbl.addRow(ob);
             }
             tablaProveedores.setModel(tbl);
@@ -254,7 +254,7 @@ public class AbmProveedoresFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Proveedor para Modificar");
             return;
         }
-        Proveedor prov = proveedores.get(row);
+        Proveedor2 prov = proveedores.get(row);
         ModificarProveedorFrame mpf = new ModificarProveedorFrame(prov);
         mpf.setVisible(true);
         this.dispose();

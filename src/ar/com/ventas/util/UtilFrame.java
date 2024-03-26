@@ -6,9 +6,13 @@
 package ar.com.ventas.util;
 
 import ar.com.ventas.entities.Usuario;
+import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.UsuarioService;
+import ar.com.ventas.structure.Menu;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -19,6 +23,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Mario
  */
 public class UtilFrame {
+
+    private static Integer maxMenu = ar.com.ventas.structure.Constantes.getCantidadMenu();
 
     public static JTable limpiarTabla(JTable tabla) {
         int rows = tabla.getRowCount();
@@ -31,7 +37,7 @@ public class UtilFrame {
         }
         return tabla;
     }
-    
+
     public static String fecha(String fe) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         int largo = fe.length();
@@ -50,8 +56,8 @@ public class UtilFrame {
         }
         return fe;
     }
-    
-    public static String getUsuario(){
+
+    public static String getUsuario() {
         String str1 = Globals.USR.get();
         String str3 = str1.substring(3, 9);
         String str5 = str3;
@@ -65,5 +71,20 @@ public class UtilFrame {
         }
         str5 = str5 + " - " + u.getNombre();
         return str5;
+    }
+
+    public static List<Menu> getListaMenus() {
+        List<Menu> lista = new ArrayList<>();
+        for (int i = 1; i < maxMenu + 1; i++) {
+            MainFrame mf = new MainFrame();
+//            System.out.println(mf);
+            Menu menu = new Menu(mf);
+            System.out.println(menu.getNombreMenu(i));
+            lista.add(menu);
+//            System.out.println(menu.setMostrarMenuByCodigo(i).getName());
+        }
+        System.out.println(lista.get(1));
+        System.exit(0);
+        return lista;
     }
 }

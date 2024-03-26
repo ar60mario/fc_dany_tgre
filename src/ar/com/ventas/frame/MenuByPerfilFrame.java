@@ -30,6 +30,7 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
     private List<MenuByPerfil> menues;
     private Perfil perfil;
     private Boolean esNuevo = false;
+    private Integer maxMenu = Constantes.getCantidadMenu();
 
     /**
      * Creates new form PerfilFrame
@@ -227,46 +228,48 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
         combo.addItem("");
         UtilFrame.limpiarTabla(tabla);
         DefaultTableModel tbl = (DefaultTableModel) tabla.getModel();
-        if (perfil != null) {
-            combo.addItem(perfil.getNombre());
-            combo.setSelectedIndex(1);
-            menues = new ArrayList<>();
-            esNuevo = true;
-            for (Menu m : Menu.values()) {
+//        if (perfil != null) {
+//            combo.addItem(perfil.getNombre());
+//            combo.setSelectedIndex(1);
+//            menues = new ArrayList<>();
+//            esNuevo = true;
+            for(int i = 1; i < maxMenu + 1; i++){
                 Object o[] = new Object[4];
-                o[0] = m.getCodigo();
-                o[1] = m.getNombre();
-                o[2] = m.getSubMenu();
+                MainFrame mf = new MainFrame();
+                Menu menu = new Menu(mf);
+                o[0] = i;
+                o[1] = menu.setMostrarMenuByCodigo(i).getName();
+//                o[2] = m.getSubMenu();
                 o[3] = "-SI-";
                 tbl.addRow(o);
                 MenuByPerfil mp = new MenuByPerfil();
-                mp.setCodigo(m.getCodigo());
+//                mp.setCodigo(m.getCodigo());
                 mp.setHabilitado(true);
-                mp.setNombre(m.getNombre());
+//                mp.setNombre(m.getNombre());
                 mp.setPerfil(perfil);
-                mp.setSubMenu(m.getSubMenu());
+//                mp.setSubMenu(m.getSubMenu());
                 try {
-                    new MenuByPerfilService().saveMenuByPerfil(mp);
+//                    new MenuByPerfilService().saveMenuByPerfil(mp);
                 } catch (Exception ex) {
                     Logger.getLogger(MenuByPerfilFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             tabla.setModel(tbl);
-
-        } else {
-            perfiles = null;
-            try {
-                perfiles = new PerfilService().getAllPerfiles();
-            } catch (Exception ex) {
-                Logger.getLogger(MenuByPerfilFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (perfiles != null && !perfiles.isEmpty()) {
-                perfiles.forEach((pe) -> {//for(Perfil pe:perfiles)
-                    combo.addItem(pe.getNombre());
-                });
-            }
-            esNuevo = false;
-        }
+//
+//        } else {
+//            perfiles = null;
+//            try {
+//                perfiles = new PerfilService().getAllPerfiles();
+//            } catch (Exception ex) {
+//                Logger.getLogger(MenuByPerfilFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            if (perfiles != null && !perfiles.isEmpty()) {
+//                perfiles.forEach((pe) -> {//for(Perfil pe:perfiles)
+//                    combo.addItem(pe.getNombre());
+//                });
+//            }
+//            esNuevo = false;
+//        }
     }
 
     private void limpiarCampos() {
@@ -312,22 +315,23 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
     }
 
     private void llenarTabla() {
-        if (menues != null && !menues.isEmpty()) {
-            UtilFrame.limpiarTabla(tabla);
-            DefaultTableModel tbl = (DefaultTableModel) tabla.getModel();
-            for (MenuByPerfil mp : menues) {
-                Object o[] = new Object[4];
-                o[0] = mp.getCodigo();
-                o[1] = mp.getNombre();
-                o[2] = mp.getSubMenu();
-                if (mp.getHabilitado()) {
-                    o[3] = "-SI-";
-                } else {
-                    o[3] = "NO";
-                }
-                tbl.addRow(o);
-            }
-            tabla.setModel(tbl);
-        }
+        UtilFrame.getListaMenus();
+//        if (menues != null && !menues.isEmpty()) {
+//            UtilFrame.limpiarTabla(tabla);
+//            DefaultTableModel tbl = (DefaultTableModel) tabla.getModel();
+//            for (MenuByPerfil mp : menues) {
+//                Object o[] = new Object[4];
+//                o[0] = mp.getCodigo();
+//                o[1] = mp.getNombre();
+//                o[2] = mp.getSubMenu();
+//                if (mp.getHabilitado()) {
+//                    o[3] = "-SI-";
+//                } else {
+//                    o[3] = "NO";
+//                }
+//                tbl.addRow(o);
+//            }
+//            tabla.setModel(tbl);
+//        }
     }
 }

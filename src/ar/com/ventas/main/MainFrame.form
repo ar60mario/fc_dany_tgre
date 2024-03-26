@@ -12,6 +12,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="clientesMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="CLIENTES"/>
+                <Property name="name" type="java.lang.String" value="ARCHIVO - ABM CLIENTES" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clientesMnuActionPerformed"/>
@@ -20,6 +21,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="productosMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="PRODUCTOS"/>
+                <Property name="name" type="java.lang.String" value="ARCHIVO - ABM PRODUCTOS" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="productosMnuActionPerformed"/>
@@ -28,6 +30,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="rubrosMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="RUBROS"/>
+                <Property name="name" type="java.lang.String" value="ARCHIVO - ABM RUBROS" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rubrosMnuActionPerformed"/>
@@ -36,6 +39,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="subRubrosMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="SUB RUBROS"/>
+                <Property name="name" type="java.lang.String" value="ARCHIVO - ABM SUB RUBROS" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subRubrosMnuActionPerformed"/>
@@ -44,6 +48,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="proveedoresMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="PROVEEDORES"/>
+                <Property name="name" type="java.lang.String" value="ARCHIVO - ABM PROVEEDORES" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="proveedoresMnuActionPerformed"/>
@@ -52,6 +57,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="usuariosMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="USUARIOS"/>
+                <Property name="name" type="java.lang.String" value="ARCHIVO - ABM USUARIOS" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usuariosMnuActionPerformed"/>
@@ -60,6 +66,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="perfilesMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="PERFILES"/>
+                <Property name="name" type="java.lang.String" value="ARCHIVO - ABM PERFILES" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="perfilesMnuActionPerformed"/>
@@ -68,6 +75,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="porcentIvaMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="PORC.IVA"/>
+                <Property name="name" type="java.lang.String" value="ARCHIVO - ABM PORCENTAJE IVA" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="porcentIvaMnuActionPerformed"/>
@@ -75,7 +83,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="herramientasMenu">
+        <Menu class="javax.swing.JMenu" name="herramientasMnu">
           <Properties>
             <Property name="text" type="java.lang.String" value="HERRAMIENTAS"/>
           </Properties>
@@ -83,6 +91,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="modificarPerfilesMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="MODIFICAR PERFILES"/>
+                <Property name="name" type="java.lang.String" value="HERRAMIENTAS - MODIFICAR PERFILES" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modificarPerfilesMnuActionPerformed"/>
@@ -98,6 +107,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="versionMnu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="VERSION"/>
+                <Property name="name" type="java.lang.String" value="VERSION" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="versionMnuActionPerformed"/>

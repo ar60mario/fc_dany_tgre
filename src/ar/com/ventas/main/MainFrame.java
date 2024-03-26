@@ -6,6 +6,7 @@ import ar.com.ventas.entities.Perfil;
 import ar.com.ventas.entities.Usuario;
 import ar.com.ventas.frame.AbmPerfilFrame;
 import ar.com.ventas.frame.AbmProductosFrame;
+import ar.com.ventas.frame.AbmProveedoresFrame;
 import ar.com.ventas.frame.NuevoPerfilFrame;
 import ar.com.ventas.frame.AbmUsuarioFrame;
 import ar.com.ventas.frame.MenuByPerfilFrame;
@@ -13,6 +14,7 @@ import ar.com.ventas.services.EquipoActivoService;
 import ar.com.ventas.services.MenuByPerfilService;
 import ar.com.ventas.services.UsuarioService;
 import ar.com.ventas.structure.Constantes;
+import ar.com.ventas.structure.Menu;
 import ar.com.ventas.util.Globals;
 import ar.com.ventas.util.UtilFrame;
 import java.net.InetAddress;
@@ -20,6 +22,7 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,9 +38,47 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
-
         limpiarFrame();
+    }
 
+    public JMenuItem getClienteMnu() {
+        return clientesMnu;
+    }
+
+    public JMenuItem getProductoMnu() {
+        return productosMnu;
+    }
+
+    public JMenuItem getRubroMnu() {
+        return rubrosMnu;
+    }
+
+    public JMenuItem getSubRubroMnu() {
+        return subRubrosMnu;
+    }
+
+    public JMenuItem getProveedoresMnu() {
+        return proveedoresMnu;
+    }
+
+    public JMenuItem getUsuariosMnu() {
+        return usuariosMnu;
+    }
+
+    public JMenuItem getPerfilesMnu() {
+        return perfilesMnu;
+    }
+
+    public JMenuItem getPorcentIvaMnu() {
+        return porcentIvaMnu;
+    }
+    
+    public JMenuItem getModificarPerfilesMnu() {
+        return modificarPerfilesMnu;
+    }
+    
+    public JMenuItem getVersionMnu() {
+        return versionMnu;
     }
 
     /**
@@ -62,7 +103,7 @@ public class MainFrame extends javax.swing.JFrame {
         usuariosMnu = new javax.swing.JMenuItem();
         perfilesMnu = new javax.swing.JMenuItem();
         porcentIvaMnu = new javax.swing.JMenuItem();
-        herramientasMenu = new javax.swing.JMenu();
+        herramientasMnu = new javax.swing.JMenu();
         modificarPerfilesMnu = new javax.swing.JMenuItem();
         aMnu = new javax.swing.JMenu();
         versionMnu = new javax.swing.JMenuItem();
@@ -89,6 +130,7 @@ public class MainFrame extends javax.swing.JFrame {
         archivoMnu.setText("ARCHIVO");
 
         clientesMnu.setText("CLIENTES");
+        clientesMnu.setName("ARCHIVO - ABM CLIENTES"); // NOI18N
         clientesMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clientesMnuActionPerformed(evt);
@@ -97,6 +139,7 @@ public class MainFrame extends javax.swing.JFrame {
         archivoMnu.add(clientesMnu);
 
         productosMnu.setText("PRODUCTOS");
+        productosMnu.setName("ARCHIVO - ABM PRODUCTOS"); // NOI18N
         productosMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 productosMnuActionPerformed(evt);
@@ -105,6 +148,7 @@ public class MainFrame extends javax.swing.JFrame {
         archivoMnu.add(productosMnu);
 
         rubrosMnu.setText("RUBROS");
+        rubrosMnu.setName("ARCHIVO - ABM RUBROS"); // NOI18N
         rubrosMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rubrosMnuActionPerformed(evt);
@@ -113,6 +157,7 @@ public class MainFrame extends javax.swing.JFrame {
         archivoMnu.add(rubrosMnu);
 
         subRubrosMnu.setText("SUB RUBROS");
+        subRubrosMnu.setName("ARCHIVO - ABM SUB RUBROS"); // NOI18N
         subRubrosMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subRubrosMnuActionPerformed(evt);
@@ -121,6 +166,7 @@ public class MainFrame extends javax.swing.JFrame {
         archivoMnu.add(subRubrosMnu);
 
         proveedoresMnu.setText("PROVEEDORES");
+        proveedoresMnu.setName("ARCHIVO - ABM PROVEEDORES"); // NOI18N
         proveedoresMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 proveedoresMnuActionPerformed(evt);
@@ -129,6 +175,7 @@ public class MainFrame extends javax.swing.JFrame {
         archivoMnu.add(proveedoresMnu);
 
         usuariosMnu.setText("USUARIOS");
+        usuariosMnu.setName("ARCHIVO - ABM USUARIOS"); // NOI18N
         usuariosMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usuariosMnuActionPerformed(evt);
@@ -137,6 +184,7 @@ public class MainFrame extends javax.swing.JFrame {
         archivoMnu.add(usuariosMnu);
 
         perfilesMnu.setText("PERFILES");
+        perfilesMnu.setName("ARCHIVO - ABM PERFILES"); // NOI18N
         perfilesMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 perfilesMnuActionPerformed(evt);
@@ -145,6 +193,7 @@ public class MainFrame extends javax.swing.JFrame {
         archivoMnu.add(perfilesMnu);
 
         porcentIvaMnu.setText("PORC.IVA");
+        porcentIvaMnu.setName("ARCHIVO - ABM PORCENTAJE IVA"); // NOI18N
         porcentIvaMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 porcentIvaMnuActionPerformed(evt);
@@ -154,21 +203,23 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(archivoMnu);
 
-        herramientasMenu.setText("HERRAMIENTAS");
+        herramientasMnu.setText("HERRAMIENTAS");
 
         modificarPerfilesMnu.setText("MODIFICAR PERFILES");
+        modificarPerfilesMnu.setName("HERRAMIENTAS - MODIFICAR PERFILES"); // NOI18N
         modificarPerfilesMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modificarPerfilesMnuActionPerformed(evt);
             }
         });
-        herramientasMenu.add(modificarPerfilesMnu);
+        herramientasMnu.add(modificarPerfilesMnu);
 
-        jMenuBar1.add(herramientasMenu);
+        jMenuBar1.add(herramientasMnu);
 
         aMnu.setText("?");
 
         versionMnu.setText("VERSION");
+        versionMnu.setName("VERSION"); // NOI18N
         versionMnu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 versionMnuActionPerformed(evt);
@@ -294,7 +345,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu aMnu;
     private javax.swing.JMenu archivoMnu;
     private javax.swing.JMenuItem clientesMnu;
-    private javax.swing.JMenu herramientasMenu;
+    private javax.swing.JMenu herramientasMnu;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem modificarPerfilesMnu;
     private javax.swing.JMenuItem perfilesMnu;
@@ -436,42 +487,19 @@ public class MainFrame extends javax.swing.JFrame {
             } catch (Exception ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-            for (MenuByPerfil mbp : menues2) {
-                if (!mbp.getHabilitado()) {
-                    int op = mbp.getCodigo();
-                    switch (op) {
-                        case 1:
-                            clientesMnu.setVisible(false);
-                            break;
-                        case 2:
-                            productosMnu.setVisible(false);
-                            break;
-                        case 3:
-                            rubrosMnu.setVisible(false);
-                            break;
-                        case 4:
-                            subRubrosMnu.setVisible(false);
-                            break;
-                        case 5:
-                            proveedoresMnu.setVisible(false);
-                            break;
-                        case 6:
-                            usuariosMnu.setVisible(false);
-                            break;
-                        case 7:
-                            perfilesMnu.setVisible(false);
-                            break;
-                        case 8:
-                            modificarPerfilesMnu.setVisible(false);
-                            break;
-                    }
-                }
-            }
+
+            menues2.stream()
+                    .filter(menu -> !menu.getHabilitado())
+                    .forEach(menu -> {
+                        
+                    });
+
+            
         }
     }
 
     private void clientes() {
-        
+        UtilFrame.getListaMenus();
     }
 
     private void menuByPerfil() {
@@ -481,18 +509,24 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void rubros() {
-        
+
     }
 
     private void subRubros() {
-        
+
     }
 
     private void proveedores() {
-        
+        AbmProveedoresFrame apf = new AbmProveedoresFrame();
+        apf.setVisible(true);
+        this.dispose();
     }
 
     private void porcentualesIva() {
-        
+
+    }
+
+    private void asd() {
+        new Menu(this);
     }
 }

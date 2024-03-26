@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.entities;
 
 /**
@@ -11,20 +6,20 @@ package ar.com.ventas.entities;
  */
 public class MenuByPerfil {
     private Long id;
-    private Integer codigo;
-    private String nombre;
-    private String subMenu;
+    private Integer codigoPerfil;
+    private Integer codigoMenu;
+    private String nombreMenu;
     private Perfil perfil;
     private Boolean habilitado;
 
     public MenuByPerfil() {
     }
 
-    public MenuByPerfil(Long id, Integer codigo, String nombre, String subMenu, Perfil perfil, Boolean habilitado) {
+    public MenuByPerfil(Long id, Integer codigoPerfil, Integer codigoMenu, String nombreMenu, Perfil perfil, Boolean habilitado) {
         this.id = id;
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.subMenu = subMenu;
+        this.codigoPerfil = codigoPerfil;
+        this.codigoMenu = codigoMenu;
+        this.nombreMenu = nombreMenu;
         this.perfil = perfil;
         this.habilitado = habilitado;
     }
@@ -37,28 +32,28 @@ public class MenuByPerfil {
         this.id = id;
     }
 
-    public Integer getCodigo() {
-        return codigo;
+    public Integer getCodigoPerfil() {
+        return codigoPerfil;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setCodigoPerfil(Integer codigoPerfil) {
+        this.codigoPerfil = codigoPerfil;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Integer getCodigoMenu() {
+        return codigoMenu;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setCodigoMenu(Integer codigoMenu) {
+        this.codigoMenu = codigoMenu;
     }
 
-    public String getSubMenu() {
-        return subMenu;
+    public String getNombreMenu() {
+        return nombreMenu;
     }
 
-    public void setSubMenu(String subMenu) {
-        this.subMenu = subMenu;
+    public void setNombreMenu(String nombreMenu) {
+        this.nombreMenu = nombreMenu;
     }
 
     public Perfil getPerfil() {
@@ -76,5 +71,5 @@ public class MenuByPerfil {
     public void setHabilitado(Boolean habilitado) {
         this.habilitado = habilitado;
     }
-    
+
 }

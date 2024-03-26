@@ -31,32 +31,45 @@ public class Proveedor2Service {
         return proveedor;
     }
 
-//    public Domicilio2 updateDomicilio(Domicilio2 domicilio) throws Exception {
-//        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
-//        Transaction tx = session.beginTransaction();
-//
-//        try {
-//            domicilio = new Domicilio2BO().updateDomicilio(domicilio);
-//            tx.commit();
-//        } catch (Exception ex) {
-//            tx.rollback();
-//            throw new Exception(ex);
-//        }
-//
-//        return domicilio;
-//    }
-//
-//    public List<Domicilio2> getAllDomicilio() throws Exception {
-//        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
-//        Transaction tx = session.beginTransaction();
-//        List<Domicilio2> domicilios = null;
-//        try {
-//            domicilios = new Domicilio2BO().getAllDomicilios();
-//            tx.commit();
-//        } catch (Exception ex) {
-//            tx.rollback();
-//            throw new Exception(ex);
-//        }
-//        return domicilios;
-//    }
+    public Proveedor2 getProveedorByCodigo(Integer codigo) throws Exception {
+        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        Proveedor2 proveedor = null;
+        try {
+            proveedor = new Proveedor2Bo().getProveedorByCodigo(codigo);
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return proveedor;
+    }
+
+    public List<Proveedor2> getProveedoresActivos() throws Exception {
+        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        List<Proveedor2> proveedores = null;
+        try {
+            proveedores = new Proveedor2Bo().getProveedoresActivos();
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return proveedores;
+    }
+    
+    public List<Proveedor2> getProveedoresActivosOrdenNombre() throws Exception {
+        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        List<Proveedor2> proveedores = null;
+        try {
+            proveedores = new Proveedor2Bo().getProveedoresActivosOrdenNombre();
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return proveedores;
+    }
 }

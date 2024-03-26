@@ -29,9 +29,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="nombreLbl" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="ingresarTxt" min="-2" max="-2" attributes="0"/>
+                      <Component id="ingresarBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="258" max="32767" attributes="0"/>
-                      <Component id="salirTxt" min="-2" max="-2" attributes="0"/>
+                      <Component id="salirBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -67,8 +67,8 @@
               <Component id="nombreLbl" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="67" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="ingresarTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="salirTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ingresarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="salirBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -95,20 +95,21 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="usuarioTxtKeyPressed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="ingresarTxt">
+    <Component class="javax.swing.JButton" name="ingresarBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="INGRESAR"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ingresarTxtActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ingresarBtnActionPerformed"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresarBtnKeyPressed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="salirTxt">
+    <Component class="javax.swing.JButton" name="salirBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="SALIR"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salirTxtActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salirBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="nombreLbl">

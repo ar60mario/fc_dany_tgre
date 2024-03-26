@@ -28,22 +28,33 @@ public class Proveedor2Bo {
         return prov;
     }
 
-//    public Domicilio2 updateDomicilio(Domicilio2 domicilio) throws Exception {
-//        try {
-//            domicilio = (Domicilio2) dao.update(domicilio);
-//        } catch (HibernateException ex) {
-//            throw new Exception(ex);
-//        }
-//        return domicilio;
-//    }
-//    
-//    public List<Domicilio2> getAllDomicilios() throws Exception {
-//        List<Domicilio2> domicilios = null;
-//        try {
-//            domicilios = (List<Domicilio2>) dao.getAll(Domicilio2.class);
-//        } catch (HibernateException ex) {
-//            throw new Exception(ex);
-//        }
-//        return domicilios;
-//    }
+    public Proveedor2 getProveedorByCodigo(Integer codigo) throws Exception {
+        Proveedor2 proveedor;
+        try {
+            proveedor = (Proveedor2) dao.getProveedorByCodigo(codigo);
+        } catch (HibernateException ex) {
+            throw new Exception(ex);
+        }
+        return proveedor;
+    }
+
+    public List<Proveedor2> getProveedoresActivos() throws Exception {
+        List<Proveedor2> proveedores;
+        try {
+            proveedores = (List<Proveedor2>) dao.getProveedoresActivos();
+        } catch (HibernateException ex) {
+            throw new Exception(ex);
+        }
+        return proveedores;
+    }
+
+    public List<Proveedor2> getProveedoresActivosOrdenNombre() throws Exception {
+        List<Proveedor2> proveedores;
+        try {
+            proveedores = (List<Proveedor2>) dao.getProveedoresActivosOrdenNombre();
+        } catch (HibernateException ex) {
+            throw new Exception(ex);
+        }
+        return proveedores;
+    }
 }

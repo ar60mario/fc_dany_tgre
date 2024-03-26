@@ -52,8 +52,8 @@ public class MainVendedorFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         usuarioTxt = new javax.swing.JTextField();
-        ingresarTxt = new javax.swing.JButton();
-        salirTxt = new javax.swing.JButton();
+        ingresarBtn = new javax.swing.JButton();
+        salirBtn = new javax.swing.JButton();
         nombreLbl = new javax.swing.JLabel();
         passwordTxt = new javax.swing.JPasswordField();
 
@@ -72,17 +72,22 @@ public class MainVendedorFrame extends javax.swing.JFrame {
             }
         });
 
-        ingresarTxt.setText("INGRESAR");
-        ingresarTxt.addActionListener(new java.awt.event.ActionListener() {
+        ingresarBtn.setText("INGRESAR");
+        ingresarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ingresarTxtActionPerformed(evt);
+                ingresarBtnActionPerformed(evt);
+            }
+        });
+        ingresarBtn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ingresarBtnKeyPressed(evt);
             }
         });
 
-        salirTxt.setText("SALIR");
-        salirTxt.addActionListener(new java.awt.event.ActionListener() {
+        salirBtn.setText("SALIR");
+        salirBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salirTxtActionPerformed(evt);
+                salirBtnActionPerformed(evt);
             }
         });
 
@@ -107,9 +112,9 @@ public class MainVendedorFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nombreLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ingresarTxt)
+                        .addComponent(ingresarBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
-                        .addComponent(salirTxt))
+                        .addComponent(salirBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -136,8 +141,8 @@ public class MainVendedorFrame extends javax.swing.JFrame {
                 .addComponent(nombreLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ingresarTxt)
-                    .addComponent(salirTxt))
+                    .addComponent(ingresarBtn)
+                    .addComponent(salirBtn))
                 .addContainerGap())
         );
 
@@ -158,25 +163,32 @@ public class MainVendedorFrame extends javax.swing.JFrame {
         // ThreadLocal<String> threadLocal = ThreadLocal.withInitial(() -> "say Hi");
     }//GEN-LAST:event_usuarioTxtKeyPressed
 
-    private void salirTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirTxtActionPerformed
+    private void salirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirBtnActionPerformed
         salir();
-    }//GEN-LAST:event_salirTxtActionPerformed
+    }//GEN-LAST:event_salirBtnActionPerformed
 
-    private void ingresarTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarTxtActionPerformed
+    private void ingresarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarBtnActionPerformed
         ingresar();
-    }//GEN-LAST:event_ingresarTxtActionPerformed
+    }//GEN-LAST:event_ingresarBtnActionPerformed
 
     private void passwordTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTxtKeyPressed
-        if(evt.getKeyCode()==10){
-            if(!passwordTxt.getText().isEmpty()){
-                if(validar()){
+        if (evt.getKeyCode() == 10) {
+            if (!passwordTxt.getText().isEmpty()) {
+                if (validar()) {
                     nombreLbl.setText(usuario.getNombre());
+                    ingresarBtn.requestFocus();
                 } else {
                     nombreLbl.setText("ERROR VERIFIQUE LOS DATOS INGRESADOS");
                 }
             }
         }
     }//GEN-LAST:event_passwordTxtKeyPressed
+
+    private void ingresarBtnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresarBtnKeyPressed
+        if (evt.getKeyCode() == 10) {
+            ingresar();
+        }
+    }//GEN-LAST:event_ingresarBtnKeyPressed
 
     /**
      * @param args the command line arguments
@@ -214,12 +226,12 @@ public class MainVendedorFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ingresarTxt;
+    private javax.swing.JButton ingresarBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel nombreLbl;
     private javax.swing.JPasswordField passwordTxt;
-    private javax.swing.JButton salirTxt;
+    private javax.swing.JButton salirBtn;
     private javax.swing.JTextField usuarioTxt;
     // End of variables declaration//GEN-END:variables
 
@@ -277,7 +289,7 @@ public class MainVendedorFrame extends javax.swing.JFrame {
 
     private void ingresar() {
         nombreLbl.setText(usuario.getNombre());
-        String str = df_order.format(order_num) 
+        String str = df_order.format(order_num)
                 + df_codigo.format(usuario.getCodigo())
                 + order_name;
         Globals.USR.set(str);
