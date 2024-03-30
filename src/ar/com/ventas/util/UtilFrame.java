@@ -84,6 +84,7 @@ public class UtilFrame {
 //            System.out.println(menu.setMostrarMenuByCodigo(i).getName());
         }
         System.out.println(lista.get(1));
+        System.out.println(lista.get(1).setMostrarMenuByCodigo(2));
         System.exit(0);
         return lista;
     }

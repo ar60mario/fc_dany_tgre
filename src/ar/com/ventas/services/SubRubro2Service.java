@@ -30,7 +30,34 @@ public class SubRubro2Service {
         }
         return subRubro;
     }
+    
+    public SubRubro2 updateSubRubro(SubRubro2 subRubro) throws Exception {
+        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            subRubro = new SubRubro2Bo().updateSubRubro(subRubro);
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return subRubro;
+    }
 
+    public List<SubRubro2> getRubrosActivosOrdenados() throws Exception {
+        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        List<SubRubro2> subRubros;
+        try {
+            subRubros = new SubRubro2Bo().getRubrosActivosOrdenados();
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return subRubros;
+    }
+    
 //    public Domicilio2 updateDomicilio(Domicilio2 domicilio) throws Exception {
 //        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 //        Transaction tx = session.beginTransaction();

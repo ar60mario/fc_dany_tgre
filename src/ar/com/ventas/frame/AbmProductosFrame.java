@@ -6,6 +6,7 @@
 package ar.com.ventas.frame;
 
 import ar.com.ventas.entities.Producto2;
+import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.ProductoService;
 import ar.com.ventas.structure.Constantes;
 import ar.com.ventas.util.UtilFrame;
@@ -355,19 +356,21 @@ public class AbmProductosFrame extends javax.swing.JFrame {
     }
 
     private void volver() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        MainFrame mf = new MainFrame();
+        mf.setVisible(true);
+        this.dispose();
     }
 
     private void siguiente() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     private void anterior() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     private void primero() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     private void nuevo() {

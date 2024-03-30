@@ -11,20 +11,18 @@ import javax.swing.JOptionPane;
  *
  * @author Marcela
  */
-public class NuevoRubroFrame extends javax.swing.JFrame {
+public class ModificarRubroFrame extends javax.swing.JFrame {
 
-//    private final Integer order_num;
-//    private final String order_name;
+    private Rubro2 rubro;
 
     /**
      * Creates new form NuevoRubroFrame
      */
-    public NuevoRubroFrame() {
+    public ModificarRubroFrame(Rubro2 rubro) {
         initComponents();
-//        this.order_name = order_name;
-//        this.order_num = order_num;
+        this.rubro = rubro;
         limpiarCampos();
-
+        llenarFrame();
     }
 
     /**
@@ -42,6 +40,7 @@ public class NuevoRubroFrame extends javax.swing.JFrame {
         nombreTxt = new javax.swing.JTextField();
         guardarBtn = new javax.swing.JButton();
         volverBtn = new javax.swing.JButton();
+        activoChk = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("NUEVO RUBRO");
@@ -68,6 +67,8 @@ public class NuevoRubroFrame extends javax.swing.JFrame {
             }
         });
 
+        activoChk.setText("ACTIVO");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,19 +77,22 @@ public class NuevoRubroFrame extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(codigoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombreTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(21, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(guardarBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(volverBtn)
-                        .addGap(44, 44, 44))))
+                        .addGap(44, 44, 44))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(codigoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nombreTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(activoChk))
+                        .addContainerGap(21, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,25 +105,31 @@ public class NuevoRubroFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nombreTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
+                .addComponent(activoChk)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(guardarBtn)
                     .addComponent(volverBtn))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
-        Rubro2 rubro = new Rubro2();
+//        Rubro2 rubro = new Rubro2();
         rubro.setCodigo(Integer.valueOf(codigoTxt.getText()));
         rubro.setNombre(nombreTxt.getText());
-        rubro.setActivo(true);
+        if(activoChk.isSelected()){
+            rubro.setActivo(true);
+        } else {
+            rubro.setActivo(false);
+        }
         try {
-            new Rubro2Service().saveRubro(rubro);
+            new Rubro2Service().updateRubro(rubro);
         } catch (Exception ex) {
-            Logger.getLogger(NuevoRubroFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModificarRubroFrame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Rubro - Error en guardar Rubro ");
         }
         limpiarCampos();
@@ -149,26 +159,29 @@ public class NuevoRubroFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NuevoRubroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarRubroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NuevoRubroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarRubroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NuevoRubroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarRubroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NuevoRubroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarRubroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NuevoRubroFrame().setVisible(true);
+                new ModificarRubroFrame(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox activoChk;
     private javax.swing.JTextField codigoTxt;
     private javax.swing.JButton guardarBtn;
     private javax.swing.JLabel jLabel1;
@@ -183,5 +196,15 @@ public class NuevoRubroFrame extends javax.swing.JFrame {
                 Constantes.getB()));
         nombreTxt.setText("");
         codigoTxt.setText("");
+    }
+
+    private void llenarFrame() {
+        nombreTxt.setText(rubro.getNombre());
+        codigoTxt.setText(rubro.getCodigo().toString());
+        if(rubro.getActivo()){
+            activoChk.setSelected(true);
+        } else {
+            activoChk.setSelected(false);
+        }
     }
 }

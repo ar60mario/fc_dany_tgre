@@ -40,6 +40,8 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="deshabilitarBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="habilitarBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="volverBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -62,6 +64,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="deshabilitarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="volverBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="habilitarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="usuarioTxt" min="-2" max="-2" attributes="0"/>
@@ -104,21 +107,15 @@
         <Component class="javax.swing.JTable" name="tabla">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="0">
-                <Column editable="false" title="CODIGO" type="java.lang.Object"/>
+              <Table columnCount="3" rowCount="0">
+                <Column editable="false" title="CODIGO_MENU" type="java.lang.Object"/>
                 <Column editable="false" title="NOMBRE" type="java.lang.Object"/>
-                <Column editable="false" title="SUB MENU" type="java.lang.Object"/>
                 <Column editable="false" title="HABILITADO" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="50" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="300" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -162,6 +159,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="usuario"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="habilitarBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="HABILITAR"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="habilitarBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

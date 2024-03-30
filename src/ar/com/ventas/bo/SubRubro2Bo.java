@@ -27,7 +27,27 @@ public class SubRubro2Bo {
         }
         return domic;
     }
+    
+    public SubRubro2 updateSubRubro(SubRubro2 subRubro) throws Exception {
+        SubRubro2 subRub = null;
+        try {
+            subRub = (SubRubro2) dao.update(subRubro);
+        } catch (HibernateException ex) {
+            throw new Exception(ex);
+        }
+        return subRub;
+    }
 
+    public List<SubRubro2> getRubrosActivosOrdenados() throws Exception {
+        List<SubRubro2> subRub = null;
+        try {
+            subRub = (List<SubRubro2>) dao.getRubrosActivosOrdenados();
+        } catch (HibernateException ex) {
+            throw new Exception(ex);
+        }
+        return subRub;
+    }
+    
 //    public Domicilio2 updateDomicilio(Domicilio2 domicilio) throws Exception {
 //        try {
 //            domicilio = (Domicilio2) dao.update(domicilio);

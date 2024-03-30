@@ -1,9 +1,14 @@
 package ar.com.ventas.frame;
 
+import ar.com.ventas.entities.MenuByPerfil;
 import ar.com.ventas.entities.Perfil;
+import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.PerfilService;
 import ar.com.ventas.structure.Constantes;
+import ar.com.ventas.structure.Menu;
 import ar.com.ventas.util.UtilFrame;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -15,6 +20,8 @@ import javax.swing.JOptionPane;
 public class NuevoPerfilFrame extends javax.swing.JFrame {
 
     private Perfil pe2;
+    private Integer maxMenu = ar.com.ventas.structure.Constantes.getCantidadMenu();
+
     /**
      * Creates new form AbmPerfilFrame
      */
@@ -228,11 +235,25 @@ public class NuevoPerfilFrame extends javax.swing.JFrame {
             Perfil pe = new Perfil();
             pe2 = new Perfil();
             pe.setActivo(true);
-            pe.setCodigo(Integer.valueOf(codigoTxt.getText()));
+            Integer codigoPerfil = Integer.valueOf(codigoTxt.getText());
+            pe.setCodigo(codigoPerfil);
             pe.setNombre(nombreTxt.getText());
-            
+            MainFrame mf = new MainFrame();
+            Menu menu = new Menu(mf);
+            List<MenuByPerfil> listaMenu = new ArrayList<>();
+            for (int i = 1; i < maxMenu + 1; i++) {
+                MenuByPerfil mbp = new MenuByPerfil();
+                mbp.setCodigoMenu(i);
+                mbp.setCodigoPerfil(codigoPerfil);
+                mbp.setHabilitado(true);
+                String nombreMenu = menu.getNombreMenu(i);
+                mbp.setNombreMenu(nombreMenu);
+                mbp.setPerfil(pe);
+                listaMenu.add(mbp);
+//                System.out.println(menu.getNombreMenu(i));
+            }
             try {
-                pe2 = new PerfilService().savePerfil(pe);
+                pe2 = new PerfilService().savePerfil(pe, listaMenu);
             } catch (Exception ex) {
                 Logger.getLogger(NuevoPerfilFrame.class.getName()).log(Level.SEVERE, null, ex);
             }

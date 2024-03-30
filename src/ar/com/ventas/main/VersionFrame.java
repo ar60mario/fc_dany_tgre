@@ -196,45 +196,45 @@ public class VersionFrame extends javax.swing.JFrame {
         usuarioTxt.setText(str5);
 //        String str1 = Globals.USR.get();
 //        String str3 = str1.substring(3, 9);
-if (u != null) {
-            Perfil perfil = u.getPerfil();
-            List<MenuByPerfil> menues2 = null;
-            try {
-                menues2 = new MenuByPerfilService().getMenuByPerfilByPerfil(perfil);
-            } catch (Exception ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            for (MenuByPerfil mbp : menues2) {
-                if (!mbp.getHabilitado()) {
-                    int op = mbp.getCodigo();
-                    switch (op) {
-                        case 9:
-                            mainBtn.setVisible(false);
-//                            break;
-//                        case 2:
-//                            productosMnu.setVisible(false);
-//                            break;
-//                        case 3:
-//                            rubrosMnu.setVisible(false);
-//                            break;
-//                        case 4:
-//                            subRubrosMnu.setVisible(false);
-//                            break;
-//                        case 5:
-//                            proveedoresMnu.setVisible(false);
-//                            break;
-//                        case 6:
-//                            usuariosMnu.setVisible(false);
-//                            break;
-//                        case 7:
-//                            perfilesMnu.setVisible(false);
-//                            break;
-//                        case 8:
-//                            modificarPerfilesMnu.setVisible(false);
-//                            break;
-                    }
-                }
-            }
-        }
+//if (u != null) {
+//            Perfil perfil = u.getPerfil();
+//            List<MenuByPerfil> menues2 = null;
+//            try {
+//                menues2 = new MenuByPerfilService().getMenuByPerfilByPerfil(perfil);
+//            } catch (Exception ex) {
+//                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            for (MenuByPerfil mbp : menues2) {
+//                if (!mbp.getHabilitado()) {
+//                    int op = mbp.getCodigo();
+//                    switch (op) {
+//                        case 9:
+//                            mainBtn.setVisible(false);
+////                            break;
+////                        case 2:
+////                            productosMnu.setVisible(false);
+////                            break;
+////                        case 3:
+////                            rubrosMnu.setVisible(false);
+////                            break;
+////                        case 4:
+////                            subRubrosMnu.setVisible(false);
+////                            break;
+////                        case 5:
+////                            proveedoresMnu.setVisible(false);
+////                            break;
+////                        case 6:
+////                            usuariosMnu.setVisible(false);
+////                            break;
+////                        case 7:
+////                            perfilesMnu.setVisible(false);
+////                            break;
+////                        case 8:
+////                            modificarPerfilesMnu.setVisible(false);
+////                            break;
+//                    }
+//                }
+//            }
+//        }
     }
 }

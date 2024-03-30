@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.frame;
 
 import ar.com.ventas.entities.MenuByPerfil;
@@ -11,9 +6,7 @@ import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.MenuByPerfilService;
 import ar.com.ventas.services.PerfilService;
 import ar.com.ventas.structure.Constantes;
-import ar.com.ventas.structure.Menu;
 import ar.com.ventas.util.UtilFrame;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,18 +22,14 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
     private List<Perfil> perfiles;
     private List<MenuByPerfil> menues;
     private Perfil perfil;
-    private Boolean esNuevo = false;
-    private Integer maxMenu = Constantes.getCantidadMenu();
+    
 
     /**
      * Creates new form PerfilFrame
      *
-     * @param perfil
      */
-    public MenuByPerfilFrame(Perfil perfil) {
+    public MenuByPerfilFrame() {
         initComponents();
-
-        this.perfil = perfil;
         limpiarCampos();
         llenarCombo();
     }
@@ -61,6 +50,7 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
         deshabilitarBtn = new javax.swing.JButton();
         volverBtn = new javax.swing.JButton();
         usuarioTxt = new javax.swing.JLabel();
+        habilitarBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,11 +68,11 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CODIGO", "NOMBRE", "SUB MENU", "HABILITADO"
+                "CODIGO_MENU", "NOMBRE", "HABILITADO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -93,8 +83,7 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
         if (tabla.getColumnModel().getColumnCount() > 0) {
             tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
             tabla.getColumnModel().getColumn(1).setPreferredWidth(300);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(300);
-            tabla.getColumnModel().getColumn(3).setPreferredWidth(60);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(60);
         }
 
         deshabilitarBtn.setText("DESHABILITAR");
@@ -112,6 +101,13 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
         });
 
         usuarioTxt.setText("usuario");
+
+        habilitarBtn.setText("HABILITAR");
+        habilitarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                habilitarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,6 +127,8 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(deshabilitarBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(habilitarBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(volverBtn)))
                 .addContainerGap())
@@ -147,7 +145,8 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deshabilitarBtn)
-                    .addComponent(volverBtn))
+                    .addComponent(volverBtn)
+                    .addComponent(habilitarBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(usuarioTxt)
                 .addContainerGap())
@@ -167,15 +166,15 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
         int row = combo.getSelectedIndex();
         if (row > 0) {
-            if (!esNuevo) {
-                if (perfiles != null && !perfiles.isEmpty()) {
-                    Perfil pe = perfiles.get(row - 1);
-                    cargarListaDeMenues(pe);
-                    llenarTabla();
-                }
-            }
+            perfil = perfiles.get(row - 1);
+            cargarListaDeMenues(perfil);
+            llenarTabla();
         }
     }//GEN-LAST:event_comboActionPerformed
+
+    private void habilitarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitarBtnActionPerformed
+        habilitar();
+    }//GEN-LAST:event_habilitarBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,7 +207,7 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuByPerfilFrame(null).setVisible(true);
+                new MenuByPerfilFrame().setVisible(true);
             }
         });
     }
@@ -216,6 +215,7 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> combo;
     private javax.swing.JButton deshabilitarBtn;
+    private javax.swing.JButton habilitarBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabla;
@@ -226,50 +226,18 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
     private void llenarCombo() {
         combo.removeAllItems();
         combo.addItem("");
-        UtilFrame.limpiarTabla(tabla);
-        DefaultTableModel tbl = (DefaultTableModel) tabla.getModel();
-//        if (perfil != null) {
-//            combo.addItem(perfil.getNombre());
-//            combo.setSelectedIndex(1);
-//            menues = new ArrayList<>();
-//            esNuevo = true;
-            for(int i = 1; i < maxMenu + 1; i++){
-                Object o[] = new Object[4];
-                MainFrame mf = new MainFrame();
-                Menu menu = new Menu(mf);
-                o[0] = i;
-                o[1] = menu.setMostrarMenuByCodigo(i).getName();
-//                o[2] = m.getSubMenu();
-                o[3] = "-SI-";
-                tbl.addRow(o);
-                MenuByPerfil mp = new MenuByPerfil();
-//                mp.setCodigo(m.getCodigo());
-                mp.setHabilitado(true);
-//                mp.setNombre(m.getNombre());
-                mp.setPerfil(perfil);
-//                mp.setSubMenu(m.getSubMenu());
-                try {
-//                    new MenuByPerfilService().saveMenuByPerfil(mp);
-                } catch (Exception ex) {
-                    Logger.getLogger(MenuByPerfilFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        perfiles = null;
+        try {
+            perfiles = new PerfilService().getAllPerfiles();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "NO HAY PERFILES");
+            return;
+        }
+        if (perfiles != null && !perfiles.isEmpty()) {
+            for (Perfil pe : perfiles) {
+                combo.addItem(pe.getNombre());
             }
-            tabla.setModel(tbl);
-//
-//        } else {
-//            perfiles = null;
-//            try {
-//                perfiles = new PerfilService().getAllPerfiles();
-//            } catch (Exception ex) {
-//                Logger.getLogger(MenuByPerfilFrame.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            if (perfiles != null && !perfiles.isEmpty()) {
-//                perfiles.forEach((pe) -> {//for(Perfil pe:perfiles)
-//                    combo.addItem(pe.getNombre());
-//                });
-//            }
-//            esNuevo = false;
-//        }
+        }
     }
 
     private void limpiarCampos() {
@@ -277,7 +245,6 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
                 Constantes.getG(),
                 Constantes.getB()));
         usuarioTxt.setText(UtilFrame.getUsuario());
-
     }
 
     private void volver() {
@@ -315,23 +282,40 @@ public class MenuByPerfilFrame extends javax.swing.JFrame {
     }
 
     private void llenarTabla() {
-        UtilFrame.getListaMenus();
-//        if (menues != null && !menues.isEmpty()) {
-//            UtilFrame.limpiarTabla(tabla);
-//            DefaultTableModel tbl = (DefaultTableModel) tabla.getModel();
-//            for (MenuByPerfil mp : menues) {
-//                Object o[] = new Object[4];
-//                o[0] = mp.getCodigo();
-//                o[1] = mp.getNombre();
-//                o[2] = mp.getSubMenu();
-//                if (mp.getHabilitado()) {
-//                    o[3] = "-SI-";
-//                } else {
-//                    o[3] = "NO";
-//                }
-//                tbl.addRow(o);
-//            }
-//            tabla.setModel(tbl);
-//        }
+        UtilFrame.limpiarTabla(tabla);
+        if (menues != null && !menues.isEmpty()) {
+            DefaultTableModel tbl = (DefaultTableModel) tabla.getModel();
+            for (MenuByPerfil mp : menues) {
+                Object o[] = new Object[3];
+                o[0] = mp.getCodigoMenu();
+                o[1] = mp.getNombreMenu();
+                if (mp.getHabilitado()) {
+                    o[2] = "-SI-";
+                } else {
+                    o[2] = "NO";
+                }
+                tbl.addRow(o);
+            }
+            tabla.setModel(tbl);
+        }
+    }
+
+    private void habilitar() {
+        int row = tabla.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR UN MENU PARA HABILITAR");
+            return;
+        }
+        if (menues != null && !menues.isEmpty()) {
+            MenuByPerfil mp2 = menues.get(row);
+            mp2.setHabilitado(true);
+            try {
+                new MenuByPerfilService().updateMenuByPerfil(mp2);
+            } catch (Exception ex) {
+                Logger.getLogger(MenuByPerfilFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            cargarListaDeMenues(perfil);
+            llenarTabla();
+        }
     }
 }

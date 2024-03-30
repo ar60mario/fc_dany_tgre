@@ -7,7 +7,8 @@ import ar.com.ventas.entities.Usuario;
 import ar.com.ventas.frame.AbmPerfilFrame;
 import ar.com.ventas.frame.AbmProductosFrame;
 import ar.com.ventas.frame.AbmProveedoresFrame;
-import ar.com.ventas.frame.NuevoPerfilFrame;
+import ar.com.ventas.frame.AbmRubrosFrame;
+import ar.com.ventas.frame.AbmSubRubrosFrame;
 import ar.com.ventas.frame.AbmUsuarioFrame;
 import ar.com.ventas.frame.MenuByPerfilFrame;
 import ar.com.ventas.services.EquipoActivoService;
@@ -17,8 +18,6 @@ import ar.com.ventas.structure.Constantes;
 import ar.com.ventas.structure.Menu;
 import ar.com.ventas.util.Globals;
 import ar.com.ventas.util.UtilFrame;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +29,8 @@ import javax.swing.JOptionPane;
  * @author argia
  */
 public class MainFrame extends javax.swing.JFrame {
+
+    private Integer maxMenu = Constantes.getCantidadMenu();
 
     /**
      * Creates new form MainFrame
@@ -72,11 +73,11 @@ public class MainFrame extends javax.swing.JFrame {
     public JMenuItem getPorcentIvaMnu() {
         return porcentIvaMnu;
     }
-    
+
     public JMenuItem getModificarPerfilesMnu() {
         return modificarPerfilesMnu;
     }
-    
+
     public JMenuItem getVersionMnu() {
         return versionMnu;
     }
@@ -478,42 +479,51 @@ public class MainFrame extends javax.swing.JFrame {
             u = new UsuarioService().getUsuarioByCodigo(codigo);
         } catch (Exception ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
-        if (u != null) {
-            Perfil perfil = u.getPerfil();
-            List<MenuByPerfil> menues2 = null;
-            try {
-                menues2 = new MenuByPerfilService().getMenuByPerfilByPerfil(perfil);
-            } catch (Exception ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        Perfil perfil = u.getPerfil();
+        List<MenuByPerfil> menues2 = null;
+        try {
+            menues2 = new MenuByPerfilService().getMenuByPerfilByPerfil(perfil);
+        } catch (Exception ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 1; i < maxMenu; i++) {
+            MenuByPerfil menuByPerfil = menues2.get(i);
+            Integer codigoMenu = menuByPerfil.getCodigoMenu();
+            if (!menuByPerfil.getHabilitado()) {
+                Menu menu = new Menu(this);
+                menu.setOcultarMenuByCodigo(codigoMenu);
             }
-
-            menues2.stream()
-                    .filter(menu -> !menu.getHabilitado())
-                    .forEach(menu -> {
-                        
-                    });
-
-            
         }
     }
 
     private void clientes() {
-        UtilFrame.getListaMenus();
+//        Integer maxMenu = ar.com.ventas.structure.Constantes.getCantidadMenu();
+//        MainFrame mf = new MainFrame();
+//        Menu menu = new Menu(mf);
+////        List<Menu> lista = UtilFrame.getListaMenus();
+//        for(int i = 1; i < maxMenu + 1;i++){
+//            System.out.println(menu.getNombreMenu(i));
+//        }
     }
 
     private void menuByPerfil() {
-        MenuByPerfilFrame mbpf = new MenuByPerfilFrame(null);
+        MenuByPerfilFrame mbpf = new MenuByPerfilFrame();
         mbpf.setVisible(true);
         this.dispose();
     }
 
     private void rubros() {
-
+        AbmRubrosFrame arf = new AbmRubrosFrame();
+        arf.setVisible(true);
+        this.dispose();
     }
 
     private void subRubros() {
-
+        AbmSubRubrosFrame arf = new AbmSubRubrosFrame();
+        arf.setVisible(true);
+        this.dispose();
     }
 
     private void proveedores() {
@@ -527,6 +537,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void asd() {
-        new Menu(this);
+        Menu menu = new Menu(this);
     }
 }

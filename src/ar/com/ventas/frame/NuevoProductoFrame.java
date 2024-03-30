@@ -5,11 +5,24 @@
  */
 package ar.com.ventas.frame;
 
+import ar.com.ventas.entities.Precio;
+import ar.com.ventas.entities.Producto2;
+import ar.com.ventas.entities.Proveedor2;
+import ar.com.ventas.entities.Rubro2;
+import ar.com.ventas.entities.Stock;
+import ar.com.ventas.entities.SubRubro2;
 import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.ProductoService;
+import ar.com.ventas.services.Proveedor2Service;
+import ar.com.ventas.services.Rubro2Service;
+import ar.com.ventas.services.SubRubro2Service;
 import ar.com.ventas.structure.Constantes;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,13 +30,18 @@ import java.util.logging.Logger;
  */
 public class NuevoProductoFrame extends javax.swing.JFrame {
 
+    private List<Proveedor2> proveedores;
+    private List<Rubro2> rubros;
+    private List<SubRubro2> subRubros;
+    private DecimalFormat df3 = new DecimalFormat("#0.000");
+
     /**
      * Creates new form AbmProductosFrame
      */
     public NuevoProductoFrame() {
         initComponents();
         limpiarCampos();
-
+        llenarCombos();
     }
 
     /**
@@ -114,7 +132,8 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         comboSR = new javax.swing.JComboBox<>();
         grabarBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("NUEVO PRODUCTO");
 
         volverBtn.setText("VOLVER");
         volverBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +160,11 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         movimientoBtn.setText("MOV.");
+        movimientoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                movimientoBtnActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("STOCK:");
 
@@ -156,18 +180,43 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
 
         stockEntranteTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         stockEntranteTxt.setText("IN");
+        stockEntranteTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                stockEntranteTxtKeyPressed(evt);
+            }
+        });
 
         stockMinimoTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         stockMinimoTxt.setText("MIN");
+        stockMinimoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                stockMinimoTxtKeyPressed(evt);
+            }
+        });
 
         puntoPedidoTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         puntoPedidoTxt.setText("PEDIR");
+        puntoPedidoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                puntoPedidoTxtKeyPressed(evt);
+            }
+        });
 
         stockMaximoTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         stockMaximoTxt.setText("MAX");
+        stockMaximoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                stockMaximoTxtKeyPressed(evt);
+            }
+        });
 
         stockActualTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         stockActualTxt.setText("ACTUAL");
+        stockActualTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                stockActualTxtKeyPressed(evt);
+            }
+        });
 
         jLayeredPane1.setLayer(movimientoBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -207,7 +256,7 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
                             .addComponent(puntoPedidoTxt)
                             .addComponent(stockMaximoTxt)
                             .addComponent(stockActualTxt))
-                        .addGap(0, 96, Short.MAX_VALUE)))
+                        .addGap(0, 56, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jLayeredPane1Layout.setVerticalGroup(
@@ -237,7 +286,7 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(stockActualTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jLabel10.setText("PRECIO:");
@@ -278,12 +327,22 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         precio2Txt.setText("S");
 
         precio3Txt.setText("S");
+        precio3Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                precio3TxtKeyPressed(evt);
+            }
+        });
 
         porcentaje4Txt.setText("S");
 
         porcentaje5Txt.setText("S");
 
         precio4Txt.setText("W");
+        precio4Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                precio4TxtKeyPressed(evt);
+            }
+        });
 
         precio5Txt.setText("W");
 
@@ -332,10 +391,15 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
 
         comboP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel31.setText("C. UNIT.");
+        jLabel31.setText("COSTO. UNIT.");
 
         costoUnitarioTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         costoUnitarioTxt.setText("W");
+        costoUnitarioTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                costoUnitarioTxtKeyPressed(evt);
+            }
+        });
 
         jLabel32.setText("COSTO CAJA:");
 
@@ -351,6 +415,11 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
 
         porcentajeTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         porcentajeTxt.setText("PORCE");
+        porcentajeTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                porcentajeTxtKeyPressed(evt);
+            }
+        });
 
         jLabel35.setText("RUBRO:");
 
@@ -648,6 +717,71 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         grabar();
     }//GEN-LAST:event_grabarBtnActionPerformed
 
+    private void costoUnitarioTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoUnitarioTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!costoUnitarioTxt.getText().isEmpty()) { // BigDecimal bd = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+                Double costoUnitario = Double.valueOf(costoUnitarioTxt.getText());
+                Double precio = calcularPreciosLista(costoUnitario);
+                precioTxt.setText(df3.format(precio));
+//                99
+            }
+        }
+    }//GEN-LAST:event_costoUnitarioTxtKeyPressed
+
+    private void precio4TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio4TxtKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_precio4TxtKeyPressed
+
+    private void precio3TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio3TxtKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_precio3TxtKeyPressed
+
+    private void porcentajeTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_porcentajeTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!porcentajeTxt.getText().isEmpty()) {
+                if (!costoUnitarioTxt.getText().isEmpty()) {
+                    Double costoUnitario = Double.valueOf(costoUnitarioTxt.getText());
+                    calcularPreciosLista(costoUnitario);
+                }
+            }
+        }
+    }//GEN-LAST:event_porcentajeTxtKeyPressed
+
+    private void movimientoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_movimientoBtnActionPerformed
+        habilitarCamposStock();
+        stockEntranteTxt.requestFocus();
+    }//GEN-LAST:event_movimientoBtnActionPerformed
+
+    private void stockActualTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockActualTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            bloquearCamposStock();
+        }
+    }//GEN-LAST:event_stockActualTxtKeyPressed
+
+    private void stockEntranteTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockEntranteTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            stockMinimoTxt.requestFocus();
+        }
+    }//GEN-LAST:event_stockEntranteTxtKeyPressed
+
+    private void stockMinimoTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockMinimoTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            puntoPedidoTxt.requestFocus();
+        }
+    }//GEN-LAST:event_stockMinimoTxtKeyPressed
+
+    private void puntoPedidoTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_puntoPedidoTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            stockMaximoTxt.requestFocus();
+        }
+    }//GEN-LAST:event_puntoPedidoTxtKeyPressed
+
+    private void stockMaximoTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockMaximoTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            stockActualTxt.requestFocus();
+        }
+    }//GEN-LAST:event_stockMaximoTxtKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -768,7 +902,7 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void volver() {
-        MainFrame mf = new MainFrame();
+        AbmProductosFrame mf = new AbmProductosFrame();
         mf.setVisible(true);
         this.dispose();
     }
@@ -817,15 +951,321 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         costoBultoTxt.setText("");
         porcentajeTxt.setText("");
         fechaTxt.setText("");
+        comboC.removeAllItems();
+        comboC.addItem("");
+        comboP.removeAllItems();
+        comboP.addItem("");
+        comboR.removeAllItems();
+        comboR.addItem("");
+        comboSR.removeAllItems();
+        comboSR.addItem("");
+        bloquearCamposStock();
     }
 
     private void grabar() {
-        if(validar()){
-            
+        if (validar()) {
+            Producto2 producto = new Producto2();
+            Stock stock = new Stock();
+            Precio precio = new Precio();
         }
     }
 
     private boolean validar() {
+        int rowR = comboR.getSelectedIndex();
+        if (rowR < 1) {
+            JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR UN RUBRO");
+            comboR.requestFocus();
+            return false;
+        }
+        int rowSR = comboSR.getSelectedIndex();
+        if (rowSR < 1) {
+            JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR UN SUB-RUBRO");
+            comboSR.requestFocus();
+            return false;
+        }
+        int rowP = comboP.getSelectedIndex();
+        if (rowP < 1) {
+            JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR UN PROVEEDOR");
+            comboP.requestFocus();
+            return false;
+        }
+        if (descripcionTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "INGRESE UNA DESCRIPCION");
+            descripcionTxt.requestFocus();
+            return false;
+        }
+
         return true;
     }
+
+    private void llenarCombos() {
+        proveedores = null;
+        try {
+            proveedores = new Proveedor2Service().getProveedoresActivos();
+        } catch (Exception ex) {
+            Logger.getLogger(NuevoProductoFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (proveedores != null && !proveedores.isEmpty()) {
+            for (Proveedor2 p2 : proveedores) {
+                comboP.addItem(p2.getNombre());
+            }
+        }
+        rubros = null;
+        try {
+            rubros = new Rubro2Service().getRubrosActivosOrdenados();
+        } catch (Exception ex) {
+            Logger.getLogger(NuevoProductoFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (Rubro2 r2 : rubros) {
+            comboR.addItem(r2.getNombre());
+        }
+        subRubros = null;
+        try {
+            subRubros = new SubRubro2Service().getRubrosActivosOrdenados();
+        } catch (Exception ex) {
+            Logger.getLogger(NuevoProductoFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (SubRubro2 sr2 : subRubros) {
+            comboSR.addItem(sr2.getNombre());
+        }
+    }
+
+    private void calcularPrecio() {
+        BigDecimal bd_porcentaje = new BigDecimal("0.00");
+        bd_porcentaje.setScale(3);
+        if (porcentajeTxt.getText().isEmpty()) {
+            porcentajeTxt.setText("0");
+        }
+        bd_porcentaje = new BigDecimal(porcentajeTxt.getText().replace(",", "."));
+        if (!costoUnitarioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeDividCienMasUno = bd_porcentaje.divide(new BigDecimal("100"));
+            bd_porcentajeDividCienMasUno = bd_porcentajeDividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precioCalculado = bd_costoUnitario.multiply(bd_porcentajeDividCienMasUno);
+            Double precio = bd_precioCalculado.doubleValue();
+            precioTxt.setText(df3.format(precio));
+        } else {
+            costoUnitarioTxt.setText("0");
+        }
+    }
+
+    private void calcularPrecioLista2() {
+        BigDecimal bd_porcentajeLista2 = new BigDecimal("0.00");
+        bd_porcentajeLista2.setScale(3);
+        if (porcentaje2Txt.getText().isEmpty()) {
+            porcentaje2Txt.setText("0");
+        }
+        bd_porcentajeLista2 = new BigDecimal(porcentaje2Txt.getText().replace(",", "."));
+        if (!precioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(precioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeList2DividCienMasUno = bd_porcentajeLista2.divide(new BigDecimal("100"));
+            bd_porcentajeList2DividCienMasUno = bd_porcentajeList2DividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precioLista2Calculado = bd_costoUnitario.multiply(bd_porcentajeList2DividCienMasUno);
+            Double precio = bd_precioLista2Calculado.doubleValue();
+            precio2Txt.setText(df3.format(precio));
+        } else {
+            precioTxt.setText("0");
+        }
+    }
+
+    private void calcularPrecioLista3() {
+        BigDecimal bd_porcentajeLista3 = new BigDecimal("0.00");
+        bd_porcentajeLista3.setScale(3);
+        if (porcentaje3Txt.getText().isEmpty()) {
+            porcentaje3Txt.setText("0");
+        }
+        bd_porcentajeLista3 = new BigDecimal(porcentaje3Txt.getText().replace(",", "."));
+        if (!precioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(precioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeList3DividCienMasUno = bd_porcentajeLista3.divide(new BigDecimal("100"));
+            bd_porcentajeList3DividCienMasUno = bd_porcentajeList3DividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precioLista3Calculado = bd_costoUnitario.multiply(bd_porcentajeList3DividCienMasUno);
+            Double precio = bd_precioLista3Calculado.doubleValue();
+            precio3Txt.setText(df3.format(precio));
+        } else {
+            precioTxt.setText("0");
+        }
+    }
+
+    private void calcularPrecioLista4() {
+        BigDecimal bd_porcentajeLista4 = new BigDecimal("0.00");
+        bd_porcentajeLista4.setScale(3);
+        if (porcentaje4Txt.getText().isEmpty()) {
+            porcentaje4Txt.setText("0");
+        }
+        bd_porcentajeLista4 = new BigDecimal(porcentaje4Txt.getText().replace(",", "."));
+        if (!precioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(precioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeList4DividCienMasUno = bd_porcentajeLista4.divide(new BigDecimal("100"));
+            bd_porcentajeList4DividCienMasUno = bd_porcentajeList4DividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precioLista4Calculado = bd_costoUnitario.multiply(bd_porcentajeList4DividCienMasUno);
+            Double precio = bd_precioLista4Calculado.doubleValue();
+            precio4Txt.setText(df3.format(precio));
+        } else {
+            precioTxt.setText("0");
+        }
+    }
+
+    private void calcularPrecioLista5() {
+        BigDecimal bd_porcentajeLista5 = new BigDecimal("0.00");
+        bd_porcentajeLista5.setScale(3);
+        if (porcentaje5Txt.getText().isEmpty()) {
+            porcentaje5Txt.setText("0");
+        }
+        bd_porcentajeLista5 = new BigDecimal(porcentaje5Txt.getText().replace(",", "."));
+        if (!costoUnitarioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeList5DividCienMasUno = bd_porcentajeLista5.divide(new BigDecimal("100"));
+            bd_porcentajeList5DividCienMasUno = bd_porcentajeList5DividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precioLista5Calculado = bd_costoUnitario.multiply(bd_porcentajeList5DividCienMasUno);
+            Double precio = bd_precioLista5Calculado.doubleValue();
+            precio5Txt.setText(df3.format(precio));
+        } else {
+            costoUnitarioTxt.setText("0");
+        }
+    }
+
+    private void calcularPrecioLista6() {
+        BigDecimal bd_porcentajeLista6 = new BigDecimal("0.00");
+        bd_porcentajeLista6.setScale(3);
+        if (porcentaje6Txt.getText().isEmpty()) {
+            porcentaje6Txt.setText("0");
+        }
+        bd_porcentajeLista6 = new BigDecimal(porcentaje6Txt.getText().replace(",", "."));
+        if (!costoUnitarioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeList6DividCienMasUno = bd_porcentajeLista6.divide(new BigDecimal("100"));
+            bd_porcentajeList6DividCienMasUno = bd_porcentajeList6DividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precioLista6Calculado = bd_costoUnitario.multiply(bd_porcentajeList6DividCienMasUno);
+            Double precio = bd_precioLista6Calculado.doubleValue();
+            precio6Txt.setText(df3.format(precio));
+        } else {
+            costoUnitarioTxt.setText("0");
+        }
+    }
+
+    private void calcularPrecioLista7() {
+        BigDecimal bd_porcentajeLista7 = new BigDecimal("0.00");
+        bd_porcentajeLista7.setScale(3);
+        if (porcentaje7Txt.getText().isEmpty()) {
+            porcentaje7Txt.setText("0");
+        }
+        bd_porcentajeLista7 = new BigDecimal(porcentaje7Txt.getText().replace(",", "."));
+        if (!costoUnitarioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeList7DividCienMasUno = bd_porcentajeLista7.divide(new BigDecimal("100"));
+            bd_porcentajeList7DividCienMasUno = bd_porcentajeList7DividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precioLista7Calculado = bd_costoUnitario.multiply(bd_porcentajeList7DividCienMasUno);
+            Double precio = bd_precioLista7Calculado.doubleValue();
+            precio7Txt.setText(df3.format(precio));
+        } else {
+            costoUnitarioTxt.setText("0");
+        }
+    }
+
+    private void habilitarCamposStock() {
+        stockEntranteTxt.setEditable(false);
+        stockMinimoTxt.setEditable(false);
+        puntoPedidoTxt.setEditable(false);
+        stockMaximoTxt.setEditable(false);
+        stockActualTxt.setEditable(false);
+    }
+
+    private void bloquearCamposStock() {
+        stockEntranteTxt.setEditable(false);
+        stockMinimoTxt.setEditable(false);
+        puntoPedidoTxt.setEditable(false);
+        stockMaximoTxt.setEditable(false);
+        stockActualTxt.setEditable(false);
+    }
+
+    private Double calcularPreciosLista(Double importe) {
+//        for (int i = 1; i < 8; i++) {
+            Double importeResultado = calcularPrecioListaSobreFinal(importe, 1);
+            return importeResultado;
+//        }
+//        calcularPrecioLista2();
+//        calcularPrecioLista3();
+//        calcularPrecioLista4();
+//        calcularPrecioLista5();
+//        calcularPrecioLista6();
+//        calcularPrecioLista7();
+    }
+
+    private Double calcularPrecioListaSobreFinal(Double importe, int lista) {
+        BigDecimal bd_porcentajeLista = new BigDecimal("0.00");
+        bd_porcentajeLista.setScale(3);
+        Double precio = 0.0;
+        switch (lista) {
+            case 1:
+                if (porcentajeTxt.getText().isEmpty()) {
+                    porcentajeTxt.setText("0");
+                }
+                bd_porcentajeLista = new BigDecimal(porcentajeTxt.getText().replace(",", "."));
+                break;
+            case 2:
+                if (porcentaje2Txt.getText().isEmpty()) {
+                    porcentaje2Txt.setText("0");
+                }
+                bd_porcentajeLista = new BigDecimal(porcentaje2Txt.getText().replace(",", "."));
+                break;
+            case 3:
+                if (porcentaje3Txt.getText().isEmpty()) {
+                    porcentaje3Txt.setText("0");
+                }
+                bd_porcentajeLista = new BigDecimal(porcentaje3Txt.getText().replace(",", "."));
+                break;
+            case 4:
+                if (porcentaje4Txt.getText().isEmpty()) {
+                    porcentaje4Txt.setText("0");
+                }
+                bd_porcentajeLista = new BigDecimal(porcentaje4Txt.getText().replace(",", "."));
+                break;
+            case 5:
+                if (porcentaje5Txt.getText().isEmpty()) {
+                    porcentaje5Txt.setText("0");
+                }
+                bd_porcentajeLista = new BigDecimal(porcentaje5Txt.getText().replace(",", "."));
+                break;
+            case 6:
+                if (porcentaje6Txt.getText().isEmpty()) {
+                    porcentaje6Txt.setText("0");
+                }
+                bd_porcentajeLista = new BigDecimal(porcentaje6Txt.getText().replace(",", "."));
+                break;
+            case 7:
+                if (porcentaje7Txt.getText().isEmpty()) {
+                    porcentaje7Txt.setText("0");
+                }
+                bd_porcentajeLista = new BigDecimal(porcentaje7Txt.getText().replace(",", "."));
+                break;
+        }
+        if (lista > 4) {
+            if (!precioTxt.getText().isEmpty()) {
+                BigDecimal bd_costoUnitario = new BigDecimal(precioTxt.getText().replace(",", "."));
+                BigDecimal bd_porcentajeListDividCienMasUno = bd_porcentajeLista.divide(new BigDecimal("100"));
+                bd_porcentajeListDividCienMasUno = bd_porcentajeListDividCienMasUno.add(new BigDecimal("1"));
+                BigDecimal bd_precioListaCalculado = bd_costoUnitario.multiply(bd_porcentajeListDividCienMasUno);
+                precio = bd_precioListaCalculado.doubleValue();
+//            precio2Txt.setText(df3.format(precio));
+//            importeCalculado = precio;
+            } else {
+                precioTxt.setText("0");
+            }
+        } else {
+            if (!costoUnitarioTxt.getText().isEmpty()) {
+                BigDecimal bd_costoUnitario = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+                BigDecimal bd_porcentajeListDividCienMasUno = bd_porcentajeLista.divide(new BigDecimal("100"));
+                bd_porcentajeListDividCienMasUno = bd_porcentajeListDividCienMasUno.add(new BigDecimal("1"));
+                BigDecimal bd_precioListaCalculado = bd_costoUnitario.multiply(bd_porcentajeListDividCienMasUno);
+                precio = bd_precioListaCalculado.doubleValue();
+//            precio2Txt.setText(df3.format(precio));
+//            importeCalculado = precio;
+            } else {
+                precioTxt.setText("0");
+            }
+        }
+        return precio;
+    }
+
 }

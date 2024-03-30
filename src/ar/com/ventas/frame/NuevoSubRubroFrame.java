@@ -111,6 +111,7 @@ public class NuevoSubRubroFrame extends javax.swing.JFrame {
         SubRubro2 subRubro = new SubRubro2();
         subRubro.setCodigo(Integer.valueOf(codigoTxt.getText()));
         subRubro.setNombre(nombreTxt.getText());
+        subRubro.setActivo(true);
         try {
             new SubRubro2Service().saveSubRubro(subRubro);
         } catch (Exception ex) {

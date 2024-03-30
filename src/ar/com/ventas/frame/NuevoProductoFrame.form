@@ -2,7 +2,8 @@
 
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
+    <Property name="title" type="java.lang.String" value="NUEVO PRODUCTO"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -447,7 +448,7 @@
                               <Component id="stockMaximoTxt" alignment="0" max="32767" attributes="0"/>
                               <Component id="stockActualTxt" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="96" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="56" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -487,7 +488,7 @@
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="stockActualTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                  <EmptySpace pref="14" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -497,6 +498,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="MOV."/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="movimientoBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -533,30 +537,45 @@
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="IN"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="stockEntranteTxtKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="stockMinimoTxt">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="MIN"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="stockMinimoTxtKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="puntoPedidoTxt">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="PEDIR"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="puntoPedidoTxtKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="stockMaximoTxt">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="MAX"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="stockMaximoTxtKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="stockActualTxt">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="ACTUAL"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="stockActualTxtKeyPressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -652,6 +671,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="S"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="precio3TxtKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="porcentaje4Txt">
       <Properties>
@@ -667,6 +689,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="W"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="precio4TxtKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="precio5Txt">
       <Properties>
@@ -790,7 +815,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel31">
       <Properties>
-        <Property name="text" type="java.lang.String" value="C. UNIT."/>
+        <Property name="text" type="java.lang.String" value="COSTO. UNIT."/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="costoUnitarioTxt">
@@ -798,6 +823,9 @@
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="W"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="costoUnitarioTxtKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel32">
       <Properties>
@@ -831,6 +859,9 @@
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="PORCE"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="porcentajeTxtKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel35">
       <Properties>

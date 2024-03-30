@@ -3,6 +3,7 @@ package ar.com.ventas.frame;
 import ar.com.ventas.entities.Proveedor2;
 import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.Proveedor2Service;
+import ar.com.ventas.structure.Constantes;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +22,6 @@ public class AbmProveedoresFrame extends javax.swing.JFrame {
      * Creates new form AbmProveedoresFrame
      */
     public AbmProveedoresFrame() {
-        getContentPane().setBackground(new java.awt.Color(245, 222, 179));
         initComponents();
         this.setLocationRelativeTo(null);
         alfabeticoRb.setSelected(true);
@@ -255,9 +255,9 @@ public class AbmProveedoresFrame extends javax.swing.JFrame {
             return;
         }
         Proveedor2 prov = proveedores.get(row);
-        ModificarProveedorFrame mpf = new ModificarProveedorFrame(prov);
-        mpf.setVisible(true);
-        this.dispose();
+//        ModificarProveedorFrame mpf = new ModificarProveedorFrame(prov);
+//        mpf.setVisible(true);
+//        this.dispose();
     }
 
     private void volver() {
@@ -267,6 +267,9 @@ public class AbmProveedoresFrame extends javax.swing.JFrame {
     }
 
     private void limpiarTabla() {
+        getContentPane().setBackground(new java.awt.Color(Constantes.getR(),
+                Constantes.getG(),
+                Constantes.getB()));
         int rows = tablaProveedores.getRowCount();
         if (rows>0){
             DefaultTableModel tbl= (DefaultTableModel) tablaProveedores.getModel();

@@ -150,9 +150,9 @@ public class ModificarPerfilFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_volverBtnActionPerformed
 
     private void asignarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignarBtnActionPerformed
-        MenuByPerfilFrame mbpf = new MenuByPerfilFrame(pe2);
-        mbpf.setVisible(true);
-        this.dispose();
+//        MenuByPerfilFrame mbpf = new MenuByPerfilFrame(pe2);
+//        mbpf.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_asignarBtnActionPerformed
 
     private void grabarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grabarBtnActionPerformed
@@ -246,7 +246,7 @@ public class ModificarPerfilFrame extends javax.swing.JFrame {
             pe.setCodigo(Integer.valueOf(codigoTxt.getText()));
             pe.setNombre(nombreTxt.getText());
             try {
-                pe2 = new PerfilService().savePerfil(pe);
+//                pe2 = new PerfilService().savePerfil(pe);
             } catch (Exception ex) {
                 Logger.getLogger(ModificarPerfilFrame.class.getName()).log(Level.SEVERE, null, ex);
             }

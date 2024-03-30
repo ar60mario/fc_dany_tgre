@@ -1,6 +1,8 @@
 package ar.com.ventas.services;
 
+import ar.com.ventas.bo.MenuByPerfilBO;
 import ar.com.ventas.bo.PerfilBO;
+import ar.com.ventas.entities.MenuByPerfil;
 import ar.com.ventas.entities.Perfil;
 import ar.com.ventas.util.HibernateUtils;
 import java.util.List;
@@ -50,12 +52,16 @@ public class PerfilService {
 //       }
 //    }
 
-    public Perfil savePerfil(Perfil perfil) throws Exception {
+    public Perfil savePerfil(Perfil perfil, List<MenuByPerfil> mbp) throws Exception {
         Session session = HibernateUtils.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();
         Perfil p2 = null;
         try {
             p2 = new PerfilBO().savePerfil(perfil);
+            for(MenuByPerfil mxp : mbp){
+                mxp.setPerfil(p2);
+                new MenuByPerfilBO().saveMenuByPerfil(mxp);
+            }
             tx.commit();
         } catch (Exception ex) {
             tx.rollback();

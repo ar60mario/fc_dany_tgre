@@ -30,7 +30,34 @@ public class Rubro2Service {
         }
         return rubro;
     }
+    
+    public Rubro2 updateRubro(Rubro2 rubro) throws Exception {
+        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            rubro = new Rubro2Bo().updateRubro(rubro);
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return rubro;
+    }
 
+    public List<Rubro2> getRubrosActivosOrdenados() throws Exception {
+        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        List<Rubro2> rubros;
+        try {
+            rubros = new Rubro2Bo().getRubrosActivosOrdenados();
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return rubros;
+    }
+    
 //    public Domicilio2 updateDomicilio(Domicilio2 domicilio) throws Exception {
 //        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 //        Transaction tx = session.beginTransaction();

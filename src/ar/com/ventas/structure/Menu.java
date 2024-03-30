@@ -15,7 +15,7 @@ import javax.swing.JMenuItem;
  */
 public class Menu {
 
-    private Map<Integer, JMenuItem> mapa;
+    private static Map<Integer, JMenuItem> mapa;
 
     public Menu(MainFrame mainFrame) {
         mapa = new HashMap();

@@ -1,10 +1,11 @@
 package ar.com.ventas.frame;
 
-import ar.com.ventas.entities.SubRubro;
+import ar.com.ventas.entities.SubRubro2;
 import ar.com.ventas.entities.Usuario;
 import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.SubRubro2Service;
 import ar.com.ventas.services.UsuarioService;
+import ar.com.ventas.structure.Constantes;
 import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -28,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AbmSubRubrosFrame extends javax.swing.JFrame {
 
-    private List<SubRubro> listaSubRubro = new ArrayList();
+    private List<SubRubro2> listaSubRubro = new ArrayList();
 //    private Integer order_num;
 //    private String order_name;
 
@@ -37,6 +38,9 @@ public class AbmSubRubrosFrame extends javax.swing.JFrame {
      */
     public AbmSubRubrosFrame() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(Constantes.getR(),
+                Constantes.getG(),
+                Constantes.getB()));
         this.llenarTabla();
     }
 
@@ -63,6 +67,7 @@ public class AbmSubRubrosFrame extends javax.swing.JFrame {
         volverMenuBtn = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("ABM SUB-RUBROS");
 
         volverBtn.setText("Volver");
         volverBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -151,9 +156,9 @@ public class AbmSubRubrosFrame extends javax.swing.JFrame {
                         .addComponent(nuevoBtn)
                         .addGap(18, 18, 18)
                         .addComponent(modificarBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addComponent(borrarBtn)
                         .addGap(18, 18, 18)
+                        .addComponent(borrarBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                         .addComponent(volverBtn))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -163,7 +168,7 @@ public class AbmSubRubrosFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(volverBtn)
                     .addComponent(nuevoBtn)
@@ -188,608 +193,607 @@ public class AbmSubRubrosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_volverMenuBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
-        FileReader fr = null;
-        try {
-            fr = new FileReader("c:/Users/permisos.txt");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        BufferedReader br = new BufferedReader(fr);
-        String acceso = "";
-        try {
-            acceso = br.readLine();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            br.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (acceso.equals("1")) {
-            modificar();
-        } else {
-            if (acceso.equals("3")) {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                }
-                JTextField field = new JTextField("");
-                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
-                String[] options = {"Ingresar", "Regresar"};
-                int result = JOptionPane.showOptionDialog(
-                        null,
-                        field,
-                        "Autorización de USUARIO",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        0);
-                switch (result) {
-                    case 0:
-                        int cod = Integer.valueOf(field.getText());
-                        Usuario usu = null;
-                        try {
-                            usu = new UsuarioService().getUsuarioByCodigo(cod);
-                        } catch (Exception ex) {
-                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        if (usu != null) {
-                            int cla = usu.getNivel();
-                            if (usu.getActivo()) {
-                                if (cla > 3) {
-                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
-                                    break;
-                                }
-                                Date a = new Date();
-                                if (cla == 2) {
-                                    if (usu.getFecha() != null) {
-                                        Date b = usu.getFecha();
-                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                        if (!sdf.format(a).equals(sdf.format(b))) {
-                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
-                                            break;
-                                        }
-                                    }
-                                }
-                                JTextField field2 = new JTextField("");
-                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
-                                String[] opts = {"Ingresar", "Regresar"};
-                                int resulta = JOptionPane.showOptionDialog(
-                                        null,
-                                        field2,
-                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
-                                        JOptionPane.OK_CANCEL_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE,
-                                        null,
-                                        opts,
-                                        0);
-                                switch (resulta) {
-                                    case 0:
-                                        int contra = Integer.valueOf(field2.getText());
-                                        if (contra == usu.getContrasena()) {
-                                            modificar();
-                                        } else {
-                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
-                                        }
-                                        break;
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
-                        }
-                        break;
-                }
-            }
-        }
+//        FileReader fr = null;
+//        try {
+//            fr = new FileReader("c:/Users/permisos.txt");
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(AbmSubRubrosFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        BufferedReader br = new BufferedReader(fr);
+//        String acceso = "";
+//        try {
+//            acceso = br.readLine();
+//        } catch (IOException ex) {
+//            Logger.getLogger(AbmSubRubrosFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            br.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(AbmSubRubrosFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        if (acceso.equals("1")) {
+        modificar();
+//        } else {
+//            if (acceso.equals("3")) {
+//                try {
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//                }
+//                JTextField field = new JTextField("");
+//                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//                String[] options = {"Ingresar", "Regresar"};
+//                int result = JOptionPane.showOptionDialog(
+//                        null,
+//                        field,
+//                        "Autorización de USUARIO",
+//                        JOptionPane.OK_CANCEL_OPTION,
+//                        JOptionPane.QUESTION_MESSAGE,
+//                        null,
+//                        options,
+//                        0);
+//                switch (result) {
+//                    case 0:
+//                        int cod = Integer.valueOf(field.getText());
+//                        Usuario usu = null;
+//                        try {
+//                            usu = new UsuarioService().getUsuarioByCodigo(cod);
+//                        } catch (Exception ex) {
+//                            Logger.getLogger(AbmSubRubrosFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        if (usu != null) {
+//                            int cla = usu.getNivel();
+//                            if (usu.getActivo()) {
+//                                if (cla > 3) {
+//                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
+//                                    break;
+//                                }
+//                                Date a = new Date();
+//                                if (cla == 2) {
+//                                    if (usu.getFecha() != null) {
+//                                        Date b = usu.getFecha();
+//                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                                        if (!sdf.format(a).equals(sdf.format(b))) {
+//                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
+//                                            break;
+//                                        }
+//                                    }
+//                                }
+//                                JTextField field2 = new JTextField("");
+//                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
+//                                String[] opts = {"Ingresar", "Regresar"};
+//                                int resulta = JOptionPane.showOptionDialog(
+//                                        null,
+//                                        field2,
+//                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
+//                                        JOptionPane.OK_CANCEL_OPTION,
+//                                        JOptionPane.QUESTION_MESSAGE,
+//                                        null,
+//                                        opts,
+//                                        0);
+//                                switch (resulta) {
+//                                    case 0:
+//                                        int contra = Integer.valueOf(field2.getText());
+//                                        if (contra == usu.getContrasena()) {
+//                                            modificar();
+//                                        } else {
+//                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+//                                        }
+//                                        break;
+//                                }
+//                            } else {
+//                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
+//                            }
+//                        } else {
+//                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
+//                        }
+//                        break;
+//                }
+//            }
+//        }
     }//GEN-LAST:event_modificarBtnActionPerformed
 
     private void nuevoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoBtnActionPerformed
-        FileReader fr = null;
-        try {
-            fr = new FileReader("c:/Users/permisos.txt");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        BufferedReader br = new BufferedReader(fr);
-        String acceso = "";
-        try {
-            acceso = br.readLine();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            br.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (acceso.equals("1")) {
-            nuevo();
-        } else {
-            if (acceso.equals("3")) {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                }
-                JTextField field = new JTextField("");
-                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
-                String[] options = {"Ingresar", "Regresar"};
-                int result = JOptionPane.showOptionDialog(
-                        null,
-                        field,
-                        "Autorización de USUARIO",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        0);
-                switch (result) {
-                    case 0:
-                        int cod = Integer.valueOf(field.getText());
-                        Usuario usu = null;
-                        try {
-                            usu = new UsuarioService().getUsuarioByCodigo(cod);
-                        } catch (Exception ex) {
-                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        if (usu != null) {
-                            int cla = usu.getNivel();
-                            if (usu.getActivo()) {
-                                if (cla > 3) {
-                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
-                                    break;
-                                }
-                                Date a = new Date();
-                                if (cla == 2) {
-                                    if (usu.getFecha() != null) {
-                                        Date b = usu.getFecha();
-                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                        if (!sdf.format(a).equals(sdf.format(b))) {
-                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
-                                            break;
-                                        }
-                                    }
-                                }
-                                JTextField field2 = new JTextField("");
-                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
-                                String[] opts = {"Ingresar", "Regresar"};
-                                int resulta = JOptionPane.showOptionDialog(
-                                        null,
-                                        field2,
-                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
-                                        JOptionPane.OK_CANCEL_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE,
-                                        null,
-                                        opts,
-                                        0);
-                                switch (resulta) {
-                                    case 0:
-                                        int contra = Integer.valueOf(field2.getText());
-                                        if (contra == usu.getContrasena()) {
-                                            nuevo();
-                                        } else {
-                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
-                                        }
-                                        break;
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
-                        }
-                        break;
-                }
-            }
-        }
-        
-        
+//        FileReader fr = null;
+//        try {
+//            fr = new FileReader("c:/Users/permisos.txt");
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(AbmSubRubrosFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        BufferedReader br = new BufferedReader(fr);
+//        String acceso = "";
+//        try {
+//            acceso = br.readLine();
+//        } catch (IOException ex) {
+//            Logger.getLogger(AbmSubRubrosFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            br.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(AbmSubRubrosFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        if (acceso.equals("1")) {
+        nuevo();
+//        } else {
+//            if (acceso.equals("3")) {
+//                try {
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//                }
+//                JTextField field = new JTextField("");
+//                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//                String[] options = {"Ingresar", "Regresar"};
+//                int result = JOptionPane.showOptionDialog(
+//                        null,
+//                        field,
+//                        "Autorización de USUARIO",
+//                        JOptionPane.OK_CANCEL_OPTION,
+//                        JOptionPane.QUESTION_MESSAGE,
+//                        null,
+//                        options,
+//                        0);
+//                switch (result) {
+//                    case 0:
+//                        int cod = Integer.valueOf(field.getText());
+//                        Usuario usu = null;
+//                        try {
+//                            usu = new UsuarioService().getUsuarioByCodigo(cod);
+//                        } catch (Exception ex) {
+//                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        if (usu != null) {
+//                            int cla = usu.getNivel();
+//                            if (usu.getActivo()) {
+//                                if (cla > 3) {
+//                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
+//                                    break;
+//                                }
+//                                Date a = new Date();
+//                                if (cla == 2) {
+//                                    if (usu.getFecha() != null) {
+//                                        Date b = usu.getFecha();
+//                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                                        if (!sdf.format(a).equals(sdf.format(b))) {
+//                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
+//                                            break;
+//                                        }
+//                                    }
+//                                }
+//                                JTextField field2 = new JTextField("");
+//                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
+//                                String[] opts = {"Ingresar", "Regresar"};
+//                                int resulta = JOptionPane.showOptionDialog(
+//                                        null,
+//                                        field2,
+//                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
+//                                        JOptionPane.OK_CANCEL_OPTION,
+//                                        JOptionPane.QUESTION_MESSAGE,
+//                                        null,
+//                                        opts,
+//                                        0);
+//                                switch (resulta) {
+//                                    case 0:
+//                                        int contra = Integer.valueOf(field2.getText());
+//                                        if (contra == usu.getContrasena()) {
+//                                            nuevo();
+//                                        } else {
+//                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+//                                        }
+//                                        break;
+//                                }
+//                            } else {
+//                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
+//                            }
+//                        } else {
+//                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
+//                        }
+//                        break;
+//                }
+//            }
+//        }
+
 
     }//GEN-LAST:event_nuevoBtnActionPerformed
 
     private void borrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarBtnActionPerformed
-        FileReader fr = null;
-        try {
-            fr = new FileReader("c:/Users/permisos.txt");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        BufferedReader br = new BufferedReader(fr);
-        String acceso = "";
-        try {
-            acceso = br.readLine();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            br.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (acceso.equals("1")) {
-            borrarSubrubroSeleccionado();
-        } else {
-            if (acceso.equals("3")) {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                }
-                JTextField field = new JTextField("");
-                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
-                String[] options = {"Ingresar", "Regresar"};
-                int result = JOptionPane.showOptionDialog(
-                        null,
-                        field,
-                        "Autorización de USUARIO",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        0);
-                switch (result) {
-                    case 0:
-                        int cod = Integer.valueOf(field.getText());
-                        Usuario usu = null;
-                        try {
-                            usu = new UsuarioService().getUsuarioByCodigo(cod);
-                        } catch (Exception ex) {
-                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        if (usu != null) {
-                            int cla = usu.getNivel();
-                            if (usu.getActivo()) {
-                                if (cla > 3) {
-                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
-                                    break;
-                                }
-                                Date a = new Date();
-                                if (cla == 2) {
-                                    if (usu.getFecha() != null) {
-                                        Date b = usu.getFecha();
-                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                        if (!sdf.format(a).equals(sdf.format(b))) {
-                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
-                                            break;
-                                        }
-                                    }
-                                }
-                                JTextField field2 = new JTextField("");
-                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
-                                String[] opts = {"Ingresar", "Regresar"};
-                                int resulta = JOptionPane.showOptionDialog(
-                                        null,
-                                        field2,
-                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
-                                        JOptionPane.OK_CANCEL_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE,
-                                        null,
-                                        opts,
-                                        0);
-                                switch (resulta) {
-                                    case 0:
-                                        int contra = Integer.valueOf(field2.getText());
-                                        if (contra == usu.getContrasena()) {
-                                            borrarSubrubroSeleccionado();
-                                        } else {
-                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
-                                        }
-                                        break;
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
-                        }
-                        break;
-                }
-            }
-        }
+//        FileReader fr = null;
+//        try {
+//            fr = new FileReader("c:/Users/permisos.txt");
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        BufferedReader br = new BufferedReader(fr);
+//        String acceso = "";
+//        try {
+//            acceso = br.readLine();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            br.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        if (acceso.equals("1")) {
+//            borrarSubrubroSeleccionado();
+//        } else {
+//            if (acceso.equals("3")) {
+//                try {
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//                }
+//                JTextField field = new JTextField("");
+//                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//                String[] options = {"Ingresar", "Regresar"};
+//                int result = JOptionPane.showOptionDialog(
+//                        null,
+//                        field,
+//                        "Autorización de USUARIO",
+//                        JOptionPane.OK_CANCEL_OPTION,
+//                        JOptionPane.QUESTION_MESSAGE,
+//                        null,
+//                        options,
+//                        0);
+//                switch (result) {
+//                    case 0:
+//                        int cod = Integer.valueOf(field.getText());
+//                        Usuario usu = null;
+//                        try {
+//                            usu = new UsuarioService().getUsuarioByCodigo(cod);
+//                        } catch (Exception ex) {
+//                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        if (usu != null) {
+//                            int cla = usu.getNivel();
+//                            if (usu.getActivo()) {
+//                                if (cla > 3) {
+//                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
+//                                    break;
+//                                }
+//                                Date a = new Date();
+//                                if (cla == 2) {
+//                                    if (usu.getFecha() != null) {
+//                                        Date b = usu.getFecha();
+//                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                                        if (!sdf.format(a).equals(sdf.format(b))) {
+//                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
+//                                            break;
+//                                        }
+//                                    }
+//                                }
+//                                JTextField field2 = new JTextField("");
+//                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
+//                                String[] opts = {"Ingresar", "Regresar"};
+//                                int resulta = JOptionPane.showOptionDialog(
+//                                        null,
+//                                        field2,
+//                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
+//                                        JOptionPane.OK_CANCEL_OPTION,
+//                                        JOptionPane.QUESTION_MESSAGE,
+//                                        null,
+//                                        opts,
+//                                        0);
+//                                switch (resulta) {
+//                                    case 0:
+//                                        int contra = Integer.valueOf(field2.getText());
+//                                        if (contra == usu.getContrasena()) {
+//                                            borrarSubrubroSeleccionado();
+//                                        } else {
+//                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+//                                        }
+//                                        break;
+//                                }
+//                            } else {
+//                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
+//                            }
+//                        } else {
+//                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
+//                        }
+//                        break;
+//                }
+//            }
+//        }
 
     }//GEN-LAST:event_borrarBtnActionPerformed
 
     private void eliminarMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarMenuBtnActionPerformed
-        FileReader fr = null;
-        try {
-            fr = new FileReader("c:/Users/permisos.txt");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        BufferedReader br = new BufferedReader(fr);
-        String acceso = "";
-        try {
-            acceso = br.readLine();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            br.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (acceso.equals("1")) {
-            borrarSubrubroSeleccionado();
-        } else {
-            if (acceso.equals("3")) {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                }
-                JTextField field = new JTextField("");
-                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
-                String[] options = {"Ingresar", "Regresar"};
-                int result = JOptionPane.showOptionDialog(
-                        null,
-                        field,
-                        "Autorización de USUARIO",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        0);
-                switch (result) {
-                    case 0:
-                        int cod = Integer.valueOf(field.getText());
-                        Usuario usu = null;
-                        try {
-                            usu = new UsuarioService().getUsuarioByCodigo(cod);
-                        } catch (Exception ex) {
-                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        if (usu != null) {
-                            int cla = usu.getNivel();
-                            if (usu.getActivo()) {
-                                if (cla > 3) {
-                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
-                                    break;
-                                }
-                                Date a = new Date();
-                                if (cla == 2) {
-                                    if (usu.getFecha() != null) {
-                                        Date b = usu.getFecha();
-                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                        if (!sdf.format(a).equals(sdf.format(b))) {
-                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
-                                            break;
-                                        }
-                                    }
-                                }
-                                JTextField field2 = new JTextField("");
-                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
-                                String[] opts = {"Ingresar", "Regresar"};
-                                int resulta = JOptionPane.showOptionDialog(
-                                        null,
-                                        field2,
-                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
-                                        JOptionPane.OK_CANCEL_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE,
-                                        null,
-                                        opts,
-                                        0);
-                                switch (resulta) {
-                                    case 0:
-                                        int contra = Integer.valueOf(field2.getText());
-                                        if (contra == usu.getContrasena()) {
-                                            borrarSubrubroSeleccionado();
-                                        } else {
-                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
-                                        }
-                                        break;
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
-                        }
-                        break;
-                }
-            }
-        }
+//        FileReader fr = null;
+//        try {
+//            fr = new FileReader("c:/Users/permisos.txt");
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        BufferedReader br = new BufferedReader(fr);
+//        String acceso = "";
+//        try {
+//            acceso = br.readLine();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            br.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        if (acceso.equals("1")) {
+//            borrarSubrubroSeleccionado();
+//        } else {
+//            if (acceso.equals("3")) {
+//                try {
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//                }
+//                JTextField field = new JTextField("");
+//                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//                String[] options = {"Ingresar", "Regresar"};
+//                int result = JOptionPane.showOptionDialog(
+//                        null,
+//                        field,
+//                        "Autorización de USUARIO",
+//                        JOptionPane.OK_CANCEL_OPTION,
+//                        JOptionPane.QUESTION_MESSAGE,
+//                        null,
+//                        options,
+//                        0);
+//                switch (result) {
+//                    case 0:
+//                        int cod = Integer.valueOf(field.getText());
+//                        Usuario usu = null;
+//                        try {
+//                            usu = new UsuarioService().getUsuarioByCodigo(cod);
+//                        } catch (Exception ex) {
+//                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        if (usu != null) {
+//                            int cla = usu.getNivel();
+//                            if (usu.getActivo()) {
+//                                if (cla > 3) {
+//                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
+//                                    break;
+//                                }
+//                                Date a = new Date();
+//                                if (cla == 2) {
+//                                    if (usu.getFecha() != null) {
+//                                        Date b = usu.getFecha();
+//                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                                        if (!sdf.format(a).equals(sdf.format(b))) {
+//                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
+//                                            break;
+//                                        }
+//                                    }
+//                                }
+//                                JTextField field2 = new JTextField("");
+//                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
+//                                String[] opts = {"Ingresar", "Regresar"};
+//                                int resulta = JOptionPane.showOptionDialog(
+//                                        null,
+//                                        field2,
+//                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
+//                                        JOptionPane.OK_CANCEL_OPTION,
+//                                        JOptionPane.QUESTION_MESSAGE,
+//                                        null,
+//                                        opts,
+//                                        0);
+//                                switch (resulta) {
+//                                    case 0:
+//                                        int contra = Integer.valueOf(field2.getText());
+//                                        if (contra == usu.getContrasena()) {
+//                                            borrarSubrubroSeleccionado();
+//                                        } else {
+//                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+//                                        }
+//                                        break;
+//                                }
+//                            } else {
+//                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
+//                            }
+//                        } else {
+//                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
+//                        }
+//                        break;
+//                }
+//            }
+//        }
     }//GEN-LAST:event_eliminarMenuBtnActionPerformed
 
     private void modificarMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarMenuBtnActionPerformed
-        FileReader fr = null;
-        try {
-            fr = new FileReader("c:/Users/permisos.txt");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        BufferedReader br = new BufferedReader(fr);
-        String acceso = "";
-        try {
-            acceso = br.readLine();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            br.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (acceso.equals("1")) {
-            modificar();
-        } else {
-            if (acceso.equals("3")) {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                }
-                JTextField field = new JTextField("");
-                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
-                String[] options = {"Ingresar", "Regresar"};
-                int result = JOptionPane.showOptionDialog(
-                        null,
-                        field,
-                        "Autorización de USUARIO",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        0);
-                switch (result) {
-                    case 0:
-                        int cod = Integer.valueOf(field.getText());
-                        Usuario usu = null;
-                        try {
-                            usu = new UsuarioService().getUsuarioByCodigo(cod);
-                        } catch (Exception ex) {
-                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        if (usu != null) {
-                            int cla = usu.getNivel();
-                            if (usu.getActivo()) {
-                                if (cla > 3) {
-                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
-                                    break;
-                                }
-                                Date a = new Date();
-                                if (cla == 2) {
-                                    if (usu.getFecha() != null) {
-                                        Date b = usu.getFecha();
-                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                        if (!sdf.format(a).equals(sdf.format(b))) {
-                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
-                                            break;
-                                        }
-                                    }
-                                }
-                                JTextField field2 = new JTextField("");
-                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
-                                String[] opts = {"Ingresar", "Regresar"};
-                                int resulta = JOptionPane.showOptionDialog(
-                                        null,
-                                        field2,
-                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
-                                        JOptionPane.OK_CANCEL_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE,
-                                        null,
-                                        opts,
-                                        0);
-                                switch (resulta) {
-                                    case 0:
-                                        int contra = Integer.valueOf(field2.getText());
-                                        if (contra == usu.getContrasena()) {
-                                            modificar();
-                                        } else {
-                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
-                                        }
-                                        break;
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
-                        }
-                        break;
-                }
-            }
-        }
-        
+//        FileReader fr = null;
+//        try {
+//            fr = new FileReader("c:/Users/permisos.txt");
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        BufferedReader br = new BufferedReader(fr);
+//        String acceso = "";
+//        try {
+//            acceso = br.readLine();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            br.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        if (acceso.equals("1")) {
+        modificar();
+//        } else {
+//            if (acceso.equals("3")) {
+//                try {
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//                }
+//                JTextField field = new JTextField("");
+//                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//                String[] options = {"Ingresar", "Regresar"};
+//                int result = JOptionPane.showOptionDialog(
+//                        null,
+//                        field,
+//                        "Autorización de USUARIO",
+//                        JOptionPane.OK_CANCEL_OPTION,
+//                        JOptionPane.QUESTION_MESSAGE,
+//                        null,
+//                        options,
+//                        0);
+//                switch (result) {
+//                    case 0:
+//                        int cod = Integer.valueOf(field.getText());
+//                        Usuario usu = null;
+//                        try {
+//                            usu = new UsuarioService().getUsuarioByCodigo(cod);
+//                        } catch (Exception ex) {
+//                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        if (usu != null) {
+//                            int cla = usu.getNivel();
+//                            if (usu.getActivo()) {
+//                                if (cla > 3) {
+//                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
+//                                    break;
+//                                }
+//                                Date a = new Date();
+//                                if (cla == 2) {
+//                                    if (usu.getFecha() != null) {
+//                                        Date b = usu.getFecha();
+//                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                                        if (!sdf.format(a).equals(sdf.format(b))) {
+//                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
+//                                            break;
+//                                        }
+//                                    }
+//                                }
+//                                JTextField field2 = new JTextField("");
+//                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
+//                                String[] opts = {"Ingresar", "Regresar"};
+//                                int resulta = JOptionPane.showOptionDialog(
+//                                        null,
+//                                        field2,
+//                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
+//                                        JOptionPane.OK_CANCEL_OPTION,
+//                                        JOptionPane.QUESTION_MESSAGE,
+//                                        null,
+//                                        opts,
+//                                        0);
+//                                switch (resulta) {
+//                                    case 0:
+//                                        int contra = Integer.valueOf(field2.getText());
+//                                        if (contra == usu.getContrasena()) {
+//                                            modificar();
+//                                        } else {
+//                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+//                                        }
+//                                        break;
+//                                }
+//                            } else {
+//                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
+//                            }
+//                        } else {
+//                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
+//                        }
+//                        break;
+//                }
+//            }
+//        }
+
     }//GEN-LAST:event_modificarMenuBtnActionPerformed
 
     private void nuevoMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoMenuBtnActionPerformed
-        FileReader fr = null;
-        try {
-            fr = new FileReader("c:/Users/permisos.txt");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        BufferedReader br = new BufferedReader(fr);
-        String acceso = "";
-        try {
-            acceso = br.readLine();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            br.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (acceso.equals("1")) {
-            nuevo();
-        } else {
-            if (acceso.equals("3")) {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                }
-                JTextField field = new JTextField("");
-                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
-                String[] options = {"Ingresar", "Regresar"};
-                int result = JOptionPane.showOptionDialog(
-                        null,
-                        field,
-                        "Autorización de USUARIO",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        0);
-                switch (result) {
-                    case 0:
-                        int cod = Integer.valueOf(field.getText());
-                        Usuario usu = null;
-                        try {
-                            usu = new UsuarioService().getUsuarioByCodigo(cod);
-                        } catch (Exception ex) {
-                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        if (usu != null) {
-                            int cla = usu.getNivel();
-                            if (usu.getActivo()) {
-                                if (cla > 3) {
-                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
-                                    break;
-                                }
-                                Date a = new Date();
-                                if (cla == 2) {
-                                    if (usu.getFecha() != null) {
-                                        Date b = usu.getFecha();
-                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                        if (!sdf.format(a).equals(sdf.format(b))) {
-                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
-                                            break;
-                                        }
-                                    }
-                                }
-                                JTextField field2 = new JTextField("");
-                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
-                                String[] opts = {"Ingresar", "Regresar"};
-                                int resulta = JOptionPane.showOptionDialog(
-                                        null,
-                                        field2,
-                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
-                                        JOptionPane.OK_CANCEL_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE,
-                                        null,
-                                        opts,
-                                        0);
-                                switch (resulta) {
-                                    case 0:
-                                        int contra = Integer.valueOf(field2.getText());
-                                        if (contra == usu.getContrasena()) {
-                                            nuevo();
-                                        } else {
-                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
-                                        }
-                                        break;
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
-                        }
-                        break;
-                }
-            }
-        }
+//        FileReader fr = null;
+//        try {
+//            fr = new FileReader("c:/Users/permisos.txt");
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        BufferedReader br = new BufferedReader(fr);
+//        String acceso = "";
+//        try {
+//            acceso = br.readLine();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            br.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        if (acceso.equals("1")) {
+        nuevo();
+//        } else {
+//            if (acceso.equals("3")) {
+//                try {
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//                }
+//                JTextField field = new JTextField("");
+//                field.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//                String[] options = {"Ingresar", "Regresar"};
+//                int result = JOptionPane.showOptionDialog(
+//                        null,
+//                        field,
+//                        "Autorización de USUARIO",
+//                        JOptionPane.OK_CANCEL_OPTION,
+//                        JOptionPane.QUESTION_MESSAGE,
+//                        null,
+//                        options,
+//                        0);
+//                switch (result) {
+//                    case 0:
+//                        int cod = Integer.valueOf(field.getText());
+//                        Usuario usu = null;
+//                        try {
+//                            usu = new UsuarioService().getUsuarioByCodigo(cod);
+//                        } catch (Exception ex) {
+//                            Logger.getLogger(ModificarClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        if (usu != null) {
+//                            int cla = usu.getNivel();
+//                            if (usu.getActivo()) {
+//                                if (cla > 3) {
+//                                    JOptionPane.showMessageDialog(this, "Acceso Prohibido");
+//                                    break;
+//                                }
+//                                Date a = new Date();
+//                                if (cla == 2) {
+//                                    if (usu.getFecha() != null) {
+//                                        Date b = usu.getFecha();
+//                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                                        if (!sdf.format(a).equals(sdf.format(b))) {
+//                                            JOptionPane.showMessageDialog(this, "Acceso Vencido");
+//                                            break;
+//                                        }
+//                                    }
+//                                }
+//                                JTextField field2 = new JTextField("");
+//                                field2.setFont(new Font("Symbol", Font.PLAIN, 12));
+//                                String[] opts = {"Ingresar", "Regresar"};
+//                                int resulta = JOptionPane.showOptionDialog(
+//                                        null,
+//                                        field2,
+//                                        "CONTRASEÑA: " + usu.getNombre() + ", Autorización",
+//                                        JOptionPane.OK_CANCEL_OPTION,
+//                                        JOptionPane.QUESTION_MESSAGE,
+//                                        null,
+//                                        opts,
+//                                        0);
+//                                switch (resulta) {
+//                                    case 0:
+//                                        int contra = Integer.valueOf(field2.getText());
+//                                        if (contra == usu.getContrasena()) {
+//                                            nuevo();
+//                                        } else {
+//                                            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+//                                        }
+//                                        break;
+//                                }
+//                            } else {
+//                                JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
+//                            }
+//                        } else {
+//                            JOptionPane.showMessageDialog(this, "No existe el Usuario");
+//                        }
+//                        break;
+//                }
+//            }
+//        }
     }//GEN-LAST:event_nuevoMenuBtnActionPerformed
 
     /**
@@ -847,7 +851,7 @@ public class AbmSubRubrosFrame extends javax.swing.JFrame {
 
         try {
             SubRubro2Service subRubroService = new SubRubro2Service();
-            listaSubRubro = subRubroService.getAllSubRubros();
+            listaSubRubro = subRubroService.getRubrosActivosOrdenados();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "error en la base de datos");
         }
@@ -855,21 +859,25 @@ public class AbmSubRubrosFrame extends javax.swing.JFrame {
         model.addColumn("CODIGO");
         model.addColumn("DETALLE");
         if (listaSubRubro != null && !listaSubRubro.isEmpty()) {
-            for (SubRubro subRubro : listaSubRubro) {
+            for (SubRubro2 subRubro : listaSubRubro) {
 
                 Object[] fila = new Object[2];
                 fila[0] = subRubro.getCodigo();
-                fila[1] = subRubro.getDetalle();
+                fila[1] = subRubro.getNombre();
                 model.addRow(fila);
             }
             subRubroTabla.setModel(model);
         }
     }
 
-    private SubRubro getSubRubroSeleccionado() {
-        SubRubro subRubro = null;
+    private SubRubro2 getSubRubroSeleccionado() {
+        SubRubro2 subRubro = null;
         int filaSeleccionada = subRubroTabla.getSelectedRow();
-
+        try {
+            listaSubRubro = new SubRubro2Service().getRubrosActivosOrdenados();
+        } catch (Exception ex) {
+            Logger.getLogger(AbmSubRubrosFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (filaSeleccionada != -1 && listaSubRubro != null && !listaSubRubro.isEmpty()) {
             subRubro = listaSubRubro.get(filaSeleccionada);
         } else {
@@ -879,27 +887,27 @@ public class AbmSubRubrosFrame extends javax.swing.JFrame {
     }
 
     private void borrarSubrubroSeleccionado() {
-        int filaSeleccionada = subRubroTabla.getSelectedRow();
-        if (filaSeleccionada != -1) {
-            int confirm = JOptionPane.showConfirmDialog(this,
-                    "¿Desea eliminar al Sub Rubro?",
-                    "Borrar - Sub Rubro",
-                    JOptionPane.OK_OPTION);
-            if (confirm == JOptionPane.OK_OPTION) {
-                SubRubro subRubroABorrar = getSubRubroSeleccionado();
-                try {
-                    new SubRubro2Service().deleteSubRubro(subRubroABorrar);
-                    subRubroTabla.removeAll();
-                    this.llenarTabla();
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Sub Rubro - Seleccione un sub Rubro de la lista");
-                }
-            }
-        }
+//        int filaSeleccionada = subRubroTabla.getSelectedRow();
+//        if (filaSeleccionada != -1) {
+//            int confirm = JOptionPane.showConfirmDialog(this,
+//                    "¿Desea eliminar al Sub Rubro?",
+//                    "Borrar - Sub Rubro",
+//                    JOptionPane.OK_OPTION);
+//            if (confirm == JOptionPane.OK_OPTION) {
+//                SubRubro subRubroABorrar = getSubRubroSeleccionado();
+//                try {
+//                    new SubRubro2Service().deleteSubRubro(subRubroABorrar);
+//                    subRubroTabla.removeAll();
+//                    this.llenarTabla();
+//                } catch (Exception ex) {
+//                    JOptionPane.showMessageDialog(this, "Sub Rubro - Seleccione un sub Rubro de la lista");
+//                }
+//            }
+//        }
     }
 
     private void modificar() {
-        SubRubro subRubro = this.getSubRubroSeleccionado();
+        SubRubro2 subRubro = this.getSubRubroSeleccionado();
         ModificarSubRubroFrame msr = new ModificarSubRubroFrame(subRubro);
         msr.setVisible(true);
         this.dispose();
