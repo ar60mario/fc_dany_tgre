@@ -25,6 +25,7 @@
         <property name="costo" type="double" column="COSTO"/>
         <property name="sugerido" type="double" column="SUGERIDO"/>
         <property name="fechaActualizacion" type="date" column="FECHA_ACTUALIZACION"/>
+        <property name="horaActualizacion" type="time" column="HORA_ACTUALIZACION"/>
         <many-to-one name="porcentajeIva"
                     class="ar.com.ventas.entities.PorcentajeIva"
                      lazy="false">
