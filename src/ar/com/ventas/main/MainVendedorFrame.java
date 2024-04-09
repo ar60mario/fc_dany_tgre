@@ -10,6 +10,9 @@ import ar.com.ventas.services.EquipoActivoService;
 import ar.com.ventas.services.UsuarioService;
 import ar.com.ventas.structure.Constantes;
 import ar.com.ventas.util.Globals;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.DecimalFormat;
@@ -236,6 +239,12 @@ public class MainVendedorFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void limpiarCampos() {
+//        MathContext precision = new MathContext(5); // example 2
+//        BigDecimal a = new BigDecimal("390.540", precision);
+//        BigDecimal b = new BigDecimal("410.099", precision);
+//        System.out.println(a.divide(b, 5, RoundingMode.HALF_UP));
+//        System.exit(0);
+
         passwordTxt.setText("");
         usuarioTxt.setText("");
 //        Usuario usuario = null;

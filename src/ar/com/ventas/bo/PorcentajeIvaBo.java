@@ -5,8 +5,8 @@
  */
 package ar.com.ventas.bo;
 
-import ar.com.ventas.dao.Domicilio2DAO;
-import ar.com.ventas.entities.Domicilio2;
+import ar.com.ventas.dao.PorcentajeIvaDao;
+import ar.com.ventas.entities.PorcentajeIva;
 import java.util.List;
 import org.hibernate.HibernateException;
 
@@ -16,31 +16,31 @@ import org.hibernate.HibernateException;
  */
 public class PorcentajeIvaBo {
 
-    private final Domicilio2DAO dao = new Domicilio2DAO();
+    private final PorcentajeIvaDao dao = new PorcentajeIvaDao();
 
-    public Domicilio2 saveDomicilio(Domicilio2 domicilioCliente) throws Exception {
-        Domicilio2 domic = null;
+    public PorcentajeIva savePorcentajeIva(PorcentajeIva domicilioCliente) throws Exception {
+        PorcentajeIva domic = null;
         try {
-            domic = (Domicilio2) dao.save(domicilioCliente);
+            domic = (PorcentajeIva) dao.save(domicilioCliente);
         } catch (HibernateException ex) {
             throw new Exception(ex);
         }
         return domic;
     }
 
-    public Domicilio2 updateDomicilio(Domicilio2 domicilio) throws Exception {
+    public PorcentajeIva updatePorcentajeIva(PorcentajeIva domicilio) throws Exception {
         try {
-            domicilio = (Domicilio2) dao.update(domicilio);
+            domicilio = (PorcentajeIva) dao.update(domicilio);
         } catch (HibernateException ex) {
             throw new Exception(ex);
         }
         return domicilio;
     }
     
-    public List<Domicilio2> getAllDomicilios() throws Exception {
-        List<Domicilio2> domicilios = null;
+    public List<PorcentajeIva> getAllPorcentajeIva() throws Exception {
+        List<PorcentajeIva> domicilios = null;
         try {
-            domicilios = (List<Domicilio2>) dao.getAll(Domicilio2.class);
+            domicilios = (List<PorcentajeIva>) dao.getAll(PorcentajeIva.class);
         } catch (HibernateException ex) {
             throw new Exception(ex);
         }

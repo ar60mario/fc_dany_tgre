@@ -5,20 +5,24 @@
  */
 package ar.com.ventas.frame;
 
+import ar.com.ventas.entities.CodigoBarra;
+import ar.com.ventas.entities.PorcentajeIva;
 import ar.com.ventas.entities.Precio;
 import ar.com.ventas.entities.Producto2;
 import ar.com.ventas.entities.Proveedor2;
 import ar.com.ventas.entities.Rubro2;
 import ar.com.ventas.entities.Stock;
 import ar.com.ventas.entities.SubRubro2;
-import ar.com.ventas.main.MainFrame;
+import ar.com.ventas.services.PorcentajeIvaService;
 import ar.com.ventas.services.ProductoService;
 import ar.com.ventas.services.Proveedor2Service;
 import ar.com.ventas.services.Rubro2Service;
 import ar.com.ventas.services.SubRubro2Service;
 import ar.com.ventas.structure.Constantes;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +37,11 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
     private List<Proveedor2> proveedores;
     private List<Rubro2> rubros;
     private List<SubRubro2> subRubros;
+    private List<CodigoBarra> codigosBarra;
+    private List<PorcentajeIva>  ivas;
     private DecimalFormat df3 = new DecimalFormat("#0.000");
+    private DecimalFormat df2 = new DecimalFormat("#0.00");
+    private MathContext precision = new MathContext(5); // example 2
 
     /**
      * Creates new form AbmProductosFrame
@@ -131,6 +139,8 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         comboR = new javax.swing.JComboBox<>();
         comboSR = new javax.swing.JComboBox<>();
         grabarBtn = new javax.swing.JButton();
+        jLabel38 = new javax.swing.JLabel();
+        comboI = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("NUEVO PRODUCTO");
@@ -156,6 +166,11 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         jLabel3.setText("DESCRIPCION:");
 
         descripcionTxt.setText("DESCRIPCION");
+        descripcionTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                descripcionTxtKeyPressed(evt);
+            }
+        });
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -293,6 +308,11 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
 
         precioTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         precioTxt.setText("PRECIO");
+        precioTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                precioTxtKeyPressed(evt);
+            }
+        });
 
         jLabel11.setText("IMP.INTERNOS:");
 
@@ -320,12 +340,31 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
 
         jLabel20.setText("L3");
 
+        porcentaje2Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         porcentaje2Txt.setText("S");
+        porcentaje2Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                porcentaje2TxtKeyPressed(evt);
+            }
+        });
 
+        porcentaje3Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         porcentaje3Txt.setText("S");
+        porcentaje3Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                porcentaje3TxtKeyPressed(evt);
+            }
+        });
 
+        precio2Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         precio2Txt.setText("S");
+        precio2Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                precio2TxtKeyPressed(evt);
+            }
+        });
 
+        precio3Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         precio3Txt.setText("S");
         precio3Txt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -333,10 +372,23 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             }
         });
 
+        porcentaje4Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         porcentaje4Txt.setText("S");
+        porcentaje4Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                porcentaje4TxtKeyPressed(evt);
+            }
+        });
 
+        porcentaje5Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         porcentaje5Txt.setText("S");
+        porcentaje5Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                porcentaje5TxtKeyPressed(evt);
+            }
+        });
 
+        precio4Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         precio4Txt.setText("W");
         precio4Txt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -344,7 +396,13 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             }
         });
 
+        precio5Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         precio5Txt.setText("W");
+        precio5Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                precio5TxtKeyPressed(evt);
+            }
+        });
 
         jLabel21.setText("L4");
 
@@ -354,13 +412,37 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
 
         jLabel24.setText("L7 *");
 
+        porcentaje6Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         porcentaje6Txt.setText("W");
+        porcentaje6Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                porcentaje6TxtKeyPressed(evt);
+            }
+        });
 
+        porcentaje7Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         porcentaje7Txt.setText("W");
+        porcentaje7Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                porcentaje7TxtKeyPressed(evt);
+            }
+        });
 
+        precio6Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         precio6Txt.setText("W");
+        precio6Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                precio6TxtKeyPressed(evt);
+            }
+        });
 
+        precio7Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         precio7Txt.setText("W");
+        precio7Txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                precio7TxtKeyPressed(evt);
+            }
+        });
 
         jLabel25.setText("U.FRACC.");
 
@@ -374,12 +456,27 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
 
         unidadFraccionTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         unidadFraccionTxt.setText("W");
+        unidadFraccionTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                unidadFraccionTxtKeyPressed(evt);
+            }
+        });
 
         unidadCajaTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         unidadCajaTxt.setText("W");
+        unidadCajaTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                unidadCajaTxtKeyPressed(evt);
+            }
+        });
 
         cantidadPorBultoTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         cantidadPorBultoTxt.setText("W");
+        cantidadPorBultoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cantidadPorBultoTxtKeyPressed(evt);
+            }
+        });
 
         descuentoCTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         descuentoCTxt.setText("W");
@@ -440,6 +537,10 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
                 grabarBtnActionPerformed(evt);
             }
         });
+
+        jLabel38.setText("IVA:");
+
+        comboI.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -561,7 +662,7 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
                                                         .addGap(18, 18, 18)
                                                         .addComponent(precio7Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                     .addComponent(descuentoBTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(descuentoCTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -569,7 +670,7 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
                                                 .addComponent(jLabel31)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(costoUnitarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addGap(0, 230, Short.MAX_VALUE)))))
                         .addGap(18, 18, 18)
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -600,7 +701,10 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(comboSR, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(comboR, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(231, 231, 231)))))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel38)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(comboI, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -690,7 +794,9 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel35)
-                    .addComponent(comboR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel38)
+                    .addComponent(comboI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel36)
@@ -720,20 +826,31 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
     private void costoUnitarioTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoUnitarioTxtKeyPressed
         if (evt.getKeyCode() == 10) {
             if (!costoUnitarioTxt.getText().isEmpty()) { // BigDecimal bd = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
-                Double costoUnitario = Double.valueOf(costoUnitarioTxt.getText());
-                Double precio = calcularPreciosLista(costoUnitario);
-                precioTxt.setText(df3.format(precio));
-//                99
+                if (!porcentajeTxt.getText().isEmpty()) {
+                    Double costoUnitario = Double.valueOf(costoUnitarioTxt.getText());
+                    Double precio = calcularPreciosLista(costoUnitario);
+                    precioTxt.setText(df3.format(precio));
+                } else {
+                    porcentajeTxt.requestFocus();
+                }
             }
         }
     }//GEN-LAST:event_costoUnitarioTxtKeyPressed
 
     private void precio4TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio4TxtKeyPressed
-        // TODO add your handling code here:
+        if (evt.getKeyCode() == 10) {
+            if (!precio4Txt.getText().isEmpty()) {
+                calcularPorcentual4();
+            }
+        }
     }//GEN-LAST:event_precio4TxtKeyPressed
 
     private void precio3TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio3TxtKeyPressed
-        // TODO add your handling code here:
+        if (evt.getKeyCode() == 10) {
+            if (!precio3Txt.getText().isEmpty()) {
+                calcularPorcentual3();
+            }
+        }
     }//GEN-LAST:event_precio3TxtKeyPressed
 
     private void porcentajeTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_porcentajeTxtKeyPressed
@@ -741,7 +858,11 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             if (!porcentajeTxt.getText().isEmpty()) {
                 if (!costoUnitarioTxt.getText().isEmpty()) {
                     Double costoUnitario = Double.valueOf(costoUnitarioTxt.getText());
-                    calcularPreciosLista(costoUnitario);
+                    Double precio = calcularPreciosLista(costoUnitario);
+                    precioTxt.setText(df3.format(precio));
+                    porcentaje2Txt.requestFocus();
+                } else {
+                    precioTxt.requestFocus();
                 }
             }
         }
@@ -781,6 +902,153 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             stockActualTxt.requestFocus();
         }
     }//GEN-LAST:event_stockMaximoTxtKeyPressed
+
+    private void precio2TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio2TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!precio2Txt.getText().isEmpty()) {
+                calcularPorcentual2();
+            }
+        }
+    }//GEN-LAST:event_precio2TxtKeyPressed
+
+    private void porcentaje2TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_porcentaje2TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!porcentaje2Txt.getText().isEmpty()) {
+                calcularPrecio2();
+                porcentaje3Txt.requestFocus();
+            } else {
+                porcentaje2Txt.setText("0.00");
+            }
+        }
+    }//GEN-LAST:event_porcentaje2TxtKeyPressed
+
+    private void porcentaje3TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_porcentaje3TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!porcentaje3Txt.getText().isEmpty()) {
+                calcularPrecio3();
+                porcentaje4Txt.requestFocus();
+            } else {
+                porcentaje3Txt.setText("0.00");
+            }
+        }
+    }//GEN-LAST:event_porcentaje3TxtKeyPressed
+
+    private void porcentaje4TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_porcentaje4TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!porcentaje4Txt.getText().isEmpty()) {
+                calcularPrecio4();
+                porcentaje5Txt.requestFocus();
+            } else {
+                porcentaje4Txt.setText("0.00");
+            }
+        }
+    }//GEN-LAST:event_porcentaje4TxtKeyPressed
+
+    private void porcentaje5TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_porcentaje5TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!porcentaje5Txt.getText().isEmpty()) {
+                calcularPrecio5();
+                porcentaje6Txt.requestFocus();
+            } else {
+                porcentaje5Txt.setText("0.00");
+            }
+        }
+    }//GEN-LAST:event_porcentaje5TxtKeyPressed
+
+    private void porcentaje6TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_porcentaje6TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!porcentaje6Txt.getText().isEmpty()) {
+                calcularPrecio6();
+                porcentaje7Txt.requestFocus();
+            } else {
+                porcentaje6Txt.setText("0.00");
+            }
+        }
+    }//GEN-LAST:event_porcentaje6TxtKeyPressed
+
+    private void porcentaje7TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_porcentaje7TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!porcentaje7Txt.getText().isEmpty()) {
+                calcularPrecio7();
+                unidadFraccionTxt.requestFocus();
+            } else {
+                porcentaje7Txt.setText("0.00");
+            }
+        }
+    }//GEN-LAST:event_porcentaje7TxtKeyPressed
+
+    private void precio5TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio5TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!precio5Txt.getText().isEmpty()) {
+                calcularPorcentual5();
+            }
+        }
+    }//GEN-LAST:event_precio5TxtKeyPressed
+
+    private void precio6TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio6TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!precio6Txt.getText().isEmpty()) {
+                calcularPorcentual6();
+            }
+        }
+    }//GEN-LAST:event_precio6TxtKeyPressed
+
+    private void precio7TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio7TxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!precio7Txt.getText().isEmpty()) {
+                calcularPorcentual7();
+            }
+        }
+    }//GEN-LAST:event_precio7TxtKeyPressed
+
+    private void descripcionTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descripcionTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            costoUnitarioTxt.requestFocus();
+        }
+    }//GEN-LAST:event_descripcionTxtKeyPressed
+
+    private void precioTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+
+        }
+    }//GEN-LAST:event_precioTxtKeyPressed
+
+    private void unidadCajaTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_unidadCajaTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (unidadCajaTxt.getText().isEmpty()) {
+                unidadCajaTxt.setText("1");
+            }
+            if (!costoUnitarioTxt.getText().isEmpty()) {
+                BigDecimal bd_caja = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+                BigDecimal bd_cantidad = new BigDecimal(unidadCajaTxt.getText().replace(",", "."));
+                BigDecimal bd_costoCaja = bd_caja.multiply(bd_cantidad);
+                costoCajaTxt.setText(df3.format(bd_costoCaja.doubleValue()));
+                cantidadPorBultoTxt.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_unidadCajaTxtKeyPressed
+
+    private void unidadFraccionTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_unidadFraccionTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!unidadFraccionTxt.getText().isEmpty()) {
+                unidadFraccionTxt.setText("1");
+                unidadCajaTxt.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_unidadFraccionTxtKeyPressed
+
+    private void cantidadPorBultoTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantidadPorBultoTxtKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (!cantidadPorBultoTxt.getText().isEmpty()) {
+                if (!costoUnitarioTxt.getText().isEmpty()) {
+                    BigDecimal bd_cantidadPorBulto = new BigDecimal(cantidadPorBultoTxt.getText().replace(",", "."));
+                    BigDecimal bd_costoUnitario = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+                    BigDecimal bd_costoPorBulto = bd_cantidadPorBulto.multiply(bd_costoUnitario);
+                    costoBultoTxt.setText(df3.format(bd_costoPorBulto.doubleValue()));
+                }
+            }
+        }
+    }//GEN-LAST:event_cantidadPorBultoTxtKeyPressed
 
     /**
      * @param args the command line arguments
@@ -825,6 +1093,7 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
     private javax.swing.JTextField cantidadPorBultoTxt;
     private javax.swing.JTextField codigoTxt;
     private javax.swing.JComboBox<String> comboC;
+    private javax.swing.JComboBox<String> comboI;
     private javax.swing.JComboBox<String> comboP;
     private javax.swing.JComboBox<String> comboR;
     private javax.swing.JComboBox<String> comboSR;
@@ -868,6 +1137,7 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -908,6 +1178,9 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
     }
 
     private void limpiarCampos() {
+        jLabel2.setVisible(false);
+        comboC.setVisible(false);
+        agregarBtn.setVisible(false);
         getContentPane().setBackground(new java.awt.Color(Constantes.getR(),
                 Constantes.getG(),
                 Constantes.getB()));
@@ -959,6 +1232,8 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         comboR.addItem("");
         comboSR.removeAllItems();
         comboSR.addItem("");
+        comboI.removeAllItems();
+        comboI.addItem("");
         bloquearCamposStock();
     }
 
@@ -967,6 +1242,51 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             Producto2 producto = new Producto2();
             Stock stock = new Stock();
             Precio precio = new Precio();
+            int rowIva = comboI.getSelectedIndex();
+            int rowProveedor = comboP.getSelectedIndex();
+            int rowRubro = comboR.getSelectedIndex();
+            int rowSR = comboSR.getSelectedIndex();
+            int rowsC = comboC.getItemCount();
+            stock.setBulto(WIDTH);
+            stock.setCaja(WIDTH);
+            stock.setPuntoPedido(PROPERTIES);
+            stock.setStockActual(SOMEBITS);
+            stock.setStockMinimo(SOMEBITS);
+            stock.setUnidad(WIDTH);
+            precio.setCosto(Double.NaN);
+            precio.setFechaActualizacion(new Date());
+            precio.setImpuesto(Double.NaN);
+            precio.setPorcentaje1(TOP_ALIGNMENT);
+            precio.setPorcentaje2(TOP_ALIGNMENT);
+            precio.setPorcentaje3(TOP_ALIGNMENT);
+            precio.setPorcentaje4(TOP_ALIGNMENT);
+            precio.setPorcentaje5(TOP_ALIGNMENT);
+            precio.setPorcentaje6(TOP_ALIGNMENT);
+            precio.setPorcentaje7(TOP_ALIGNMENT);
+            precio.setPorcentajeIva(porcentajeIva);
+            precio.setPrecio1(Double.NaN);
+            precio.setPrecio2(Double.NaN);
+            precio.setPrecio3(Double.NaN);
+            precio.setPrecio4(Double.NaN);
+            precio.setPrecio5(Double.NaN);
+            precio.setPrecio6(Double.NaN);
+            precio.setPrecio7(Double.NaN);
+            precio.setSugerido(Double.NaN);
+            producto.setActivo(true);
+            producto.setActualizarGondola(true);
+            producto.setActualizarListaPrecios(true);
+            producto.setActualizarWeb(true);
+            producto.setCodigo(rowIva);
+            producto.setDetalle(detalle);
+            producto.setFechaActualiz(fechaActualiz);
+            producto.setHoraActualiz(horaActualiz);
+            producto.setListaPdf(true);
+            producto.setPrecio(precio);
+            producto.setProveedor(proveedor);
+            producto.setRubro(rubro);
+            producto.setSubRubro(subRubro);
+            producto.setStock(stock);
+            
         }
     }
 
@@ -994,7 +1314,21 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             descripcionTxt.requestFocus();
             return false;
         }
-
+        if(precioTxt.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "INGRESE UN PRECIO");
+            precioTxt.requestFocus();
+            return false;
+        }
+        if(costoUnitarioTxt.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "INGRESE UN COSTO UNITARIO");
+            costoUnitarioTxt.requestFocus();
+            return false;
+        }
+        if(porcentajeTxt.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "INGRESE UN COSTO UNITARIO");
+            porcentajeTxt.requestFocus();
+            return false;
+        }
         return true;
     }
 
@@ -1027,6 +1361,15 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         }
         for (SubRubro2 sr2 : subRubros) {
             comboSR.addItem(sr2.getNombre());
+        }
+        ivas = null;
+        try {
+            ivas = new PorcentajeIvaService().getAllPorcentajeIva();
+        } catch (Exception ex) {
+            Logger.getLogger(NuevoProductoFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(PorcentajeIva pi:ivas){
+            comboI.addItem(pi.getDetalle());
         }
     }
 
@@ -1181,8 +1524,8 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
 
     private Double calcularPreciosLista(Double importe) {
 //        for (int i = 1; i < 8; i++) {
-            Double importeResultado = calcularPrecioListaSobreFinal(importe, 1);
-            return importeResultado;
+        Double importeResultado = calcularPrecioListaSobreFinal(importe, 1);
+        return importeResultado;
 //        }
 //        calcularPrecioLista2();
 //        calcularPrecioLista3();
@@ -1268,4 +1611,183 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         return precio;
     }
 
+    private void calcularPrecio2() {
+        if (!precioTxt.getText().isEmpty()) {
+            BigDecimal bd_precioUnitario = new BigDecimal(precioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentaje2 = new BigDecimal(porcentaje2Txt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeListDividCienMasUno = bd_porcentaje2.divide(new BigDecimal("100"));
+            bd_porcentajeListDividCienMasUno = bd_porcentajeListDividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precio2Calculado = bd_precioUnitario.multiply(bd_porcentajeListDividCienMasUno);
+            Double precio2 = bd_precio2Calculado.doubleValue();
+            precio2Txt.setText(df3.format(precio2));
+//            precioTxt.setText("0.00");
+//            precio2Txt.setText("0.00");
+        } else {
+
+        }
+    }
+
+    private void calcularPrecio3() {
+        if (!precioTxt.getText().isEmpty()) {
+            BigDecimal bd_precioUnitario = new BigDecimal(precioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentaje3 = new BigDecimal(porcentaje3Txt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeListDividCienMasUno = bd_porcentaje3.divide(new BigDecimal("100"));
+            bd_porcentajeListDividCienMasUno = bd_porcentajeListDividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precio3Calculado = bd_precioUnitario.multiply(bd_porcentajeListDividCienMasUno);
+            Double precio3 = bd_precio3Calculado.doubleValue();
+            precio3Txt.setText(df3.format(precio3));
+//            precioTxt.setText("0.00");
+//            precio3Txt.setText("0.00");
+        } else {
+
+        }
+    }
+
+    private void calcularPrecio4() {
+        if (!precioTxt.getText().isEmpty()) {
+            BigDecimal bd_precioUnitario = new BigDecimal(precioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentaje4 = new BigDecimal(porcentaje4Txt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeListDividCienMasUno = bd_porcentaje4.divide(new BigDecimal("100"));
+            bd_porcentajeListDividCienMasUno = bd_porcentajeListDividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precio4Calculado = bd_precioUnitario.multiply(bd_porcentajeListDividCienMasUno);
+            Double precio4 = bd_precio4Calculado.doubleValue();
+            precio4Txt.setText(df3.format(precio4));
+//            precioTxt.setText("0.00");
+//            precio4Txt.setText("0.00");
+        } else {
+
+        }
+    }
+
+    private void calcularPrecio5() {
+        if (!costoUnitarioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentaje5 = new BigDecimal(porcentaje5Txt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeListDividCienMasUno = bd_porcentaje5.divide(new BigDecimal("100"));
+            bd_porcentajeListDividCienMasUno = bd_porcentajeListDividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precio5Calculado = bd_costoUnitario.multiply(bd_porcentajeListDividCienMasUno);
+            Double precio5 = bd_precio5Calculado.doubleValue();
+            precio5Txt.setText(df3.format(precio5));
+//            costoUnitarioTxt.setText("0.00");
+//            precio5Txt.setText("0.00");
+        } else {
+
+        }
+    }
+
+    private void calcularPrecio6() {
+        if (!costoUnitarioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentaje6 = new BigDecimal(porcentaje6Txt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeListDividCienMasUno = bd_porcentaje6.divide(new BigDecimal("100"));
+            bd_porcentajeListDividCienMasUno = bd_porcentajeListDividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precio6Calculado = bd_costoUnitario.multiply(bd_porcentajeListDividCienMasUno);
+            Double precio6 = bd_precio6Calculado.doubleValue();
+            precio6Txt.setText(df3.format(precio6));
+//            costoUnitarioTxt.setText("0.00");
+//            precio6Txt.setText("0.00");
+        } else {
+
+        }
+    }
+
+    private void calcularPrecio7() {
+        if (!costoUnitarioTxt.getText().isEmpty()) {
+            BigDecimal bd_costoUnitario = new BigDecimal(costoUnitarioTxt.getText().replace(",", "."));
+            BigDecimal bd_porcentaje7 = new BigDecimal(porcentaje7Txt.getText().replace(",", "."));
+            BigDecimal bd_porcentajeListDividCienMasUno = bd_porcentaje7.divide(new BigDecimal("100"));
+            bd_porcentajeListDividCienMasUno = bd_porcentajeListDividCienMasUno.add(new BigDecimal("1"));
+            BigDecimal bd_precio7Calculado = bd_costoUnitario.multiply(bd_porcentajeListDividCienMasUno);
+            Double precio7 = bd_precio7Calculado.doubleValue();
+            precio7Txt.setText(df3.format(precio7));
+//            costoUnitarioTxt.setText("0.00");
+//            precio7Txt.setText("0.00");
+        } else {
+
+        }
+    }
+
+    private void calcularPorcentual2() {
+        if (!precio2Txt.getText().isEmpty()) {
+            if (!precioTxt.getText().isEmpty()) {
+                Double precio = Double.valueOf(precioTxt.getText().replace(",", "."));
+                Double precio2 = Double.valueOf(precio2Txt.getText().replace(",", "."));
+                Double resultado0 = precio2 / precio;
+                Double resultado1 = resultado0 - 1;
+                Double resultado2 = resultado1 * 100;
+                String por2 = df3.format(resultado2);
+                porcentaje2Txt.setText(por2);
+            }
+        }
+    }
+
+    private void calcularPorcentual5() {
+        if (!precio5Txt.getText().isEmpty()) {
+            if (!costoUnitarioTxt.getText().isEmpty()) {
+                Double precio = Double.valueOf(costoUnitarioTxt.getText().replace(",", "."));
+                Double precio5 = Double.valueOf(precio5Txt.getText().replace(",", "."));
+                Double resultado0 = precio5 / precio;
+                Double resultado1 = resultado0 - 1;
+                Double resultado2 = resultado1 * 100;
+                String por5 = df3.format(resultado2);
+                porcentaje5Txt.setText(por5);
+            }
+        }
+    }
+
+    private void calcularPorcentual6() {
+        if (!precio6Txt.getText().isEmpty()) {
+            if (!costoUnitarioTxt.getText().isEmpty()) {
+                Double precio = Double.valueOf(costoUnitarioTxt.getText().replace(",", "."));
+                Double precio6 = Double.valueOf(precio6Txt.getText().replace(",", "."));
+                Double resultado0 = precio6 / precio;
+                Double resultado1 = resultado0 - 1;
+                Double resultado2 = resultado1 * 100;
+                String por6 = df3.format(resultado2);
+                porcentaje6Txt.setText(por6);
+            }
+        }
+    }
+
+    private void calcularPorcentual7() {
+        if (!precio7Txt.getText().isEmpty()) {
+            if (!costoUnitarioTxt.getText().isEmpty()) {
+                Double precio = Double.valueOf(costoUnitarioTxt.getText().replace(",", "."));
+                Double precio7 = Double.valueOf(precio7Txt.getText().replace(",", "."));
+                Double resultado0 = precio7 / precio;
+                Double resultado1 = resultado0 - 1;
+                Double resultado2 = resultado1 * 100;
+                String por7 = df3.format(resultado2);
+                porcentaje7Txt.setText(por7);
+            }
+        }
+    }
+
+    private void calcularPorcentual3() {
+        if (!precio3Txt.getText().isEmpty()) {
+            if (!precioTxt.getText().isEmpty()) {
+                Double precio = Double.valueOf(precioTxt.getText().replace(",", "."));
+                Double precio3 = Double.valueOf(precio3Txt.getText().replace(",", "."));
+                Double resultado0 = precio3 / precio;
+                Double resultado1 = resultado0 - 1;
+                Double resultado2 = resultado1 * 100;
+                String por3 = df3.format(resultado2);
+                porcentaje3Txt.setText(por3);
+            }
+        }
+    }
+
+    private void calcularPorcentual4() {
+        if (!precio4Txt.getText().isEmpty()) {
+            if (!precioTxt.getText().isEmpty()) {
+                Double precio = Double.valueOf(precioTxt.getText().replace(",", "."));
+                Double precio4 = Double.valueOf(precio4Txt.getText().replace(",", "."));
+                Double resultado0 = precio4 / precio;
+                Double resultado1 = resultado0 - 1;
+                Double resultado2 = resultado1 * 100;
+                String por4 = df3.format(resultado2);
+                porcentaje4Txt.setText(por4);
+            }
+        }
+    }
 }

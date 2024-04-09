@@ -3,23 +3,19 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="ar.com.gmeventas.entities.Producto2" schema="ventas_damico" table="producto_2">
+    <class name="ar.com.ventas.entities.Producto2" schema="ventas_damico" table="producto_2">
         <id name="id" column="ID">
             <generator class="identity"/>
         </id>
         <property name="codigo" type="integer" column="CODIGO" unique="true"/>
         <property name="detalle" type="string" column="DETALLE"/>
         <property name="activo" type="boolean" column="ACTIVO"/>
-        <property name="unidadFraccion" type="boolean" column="UNIDAD"/>
-        <property name="unidadCaja" type="integer" column="CANTIDAD_CAJA"/>
-        <property name="cajasPorBulto" type="integer" column="CANTIDAD_CAJA"/>
         <property name="actualizarWeb" type="boolean" column="ACTUALIZAR_WEB"/>
         <property name="actualizarGondola" type="boolean" column="ACTUALIZAR_GONDOLA"/>
         <property name="actualizarListaPrecios" type="boolean" column="ACTUALIZAR_LISTA_PRECIOS"/>
         <property name="listaPdf" type="boolean" column="LISTA_PDF"/>
         <property name="fechaActualiz" type="date" column="FECHA_ULTIMA"/>
-        <property name="costo" type="double" column="COSTO"/>
-        <property name="cantidadPorBulto" type="integer" column="CANTIDAD_POR_BULTO"/>
+        <property name="horaActualiz" type="time" column="HORA_ULTIMA"/>
         <many-to-one name="precio"
                     class="ar.com.ventas.entities.Precio"
                      lazy="false">

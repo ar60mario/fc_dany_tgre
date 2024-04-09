@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.CodigoBarra" schema="ventas_damico" table="codigo_barra">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="codigoBarra" type="long" column="CODIGO_BARRA"/>
+        <property name="orden" type="integer" column="ORDEN"/>
+        <property name="activo" type="boolean" column="ACTIVO"/>
+        <many-to-one name="producto"
+                    class="ar.com.ventas.entities.Producto2"
+                     lazy="false">
+                     <column name="ID_PRODUCTO_2" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

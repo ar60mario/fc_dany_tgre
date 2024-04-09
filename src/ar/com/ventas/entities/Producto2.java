@@ -1,5 +1,6 @@
 package ar.com.ventas.entities;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class Producto2 {
@@ -13,6 +14,7 @@ public class Producto2 {
     private Boolean actualizarListaPrecios;
     private Boolean listaPdf;
     private Date fechaActualiz;
+    private Time horaActualiz;
     private Precio precio;
     private Stock stock;
     private Rubro2 rubro;
@@ -24,8 +26,8 @@ public class Producto2 {
 
     public Producto2(Long id, Integer codigo, String detalle, Boolean activo,
             Boolean actualizarWeb, Boolean actualizarGondola, Boolean actualizarListaPrecios,
-            Boolean listaPdf, Date fechaActualiz, Precio precio, Stock stock,
-            Rubro2 rubro, SubRubro2 subRubro, Proveedor2 proveedor) {
+            Boolean listaPdf, Date fechaActualiz, Time horaActualiz, Precio precio,
+            Stock stock, Rubro2 rubro, SubRubro2 subRubro, Proveedor2 proveedor) {
         this.id = id;
         this.codigo = codigo;
         this.detalle = detalle;
@@ -35,6 +37,7 @@ public class Producto2 {
         this.actualizarListaPrecios = actualizarListaPrecios;
         this.listaPdf = listaPdf;
         this.fechaActualiz = fechaActualiz;
+        this.horaActualiz = horaActualiz;
         this.precio = precio;
         this.stock = stock;
         this.rubro = rubro;
@@ -112,6 +115,14 @@ public class Producto2 {
 
     public void setFechaActualiz(Date fechaActualiz) {
         this.fechaActualiz = fechaActualiz;
+    }
+
+    public Time getHoraActualiz() {
+        return horaActualiz;
+    }
+
+    public void setHoraActualiz(Time horaActualiz) {
+        this.horaActualiz = horaActualiz;
     }
 
     public Precio getPrecio() {
