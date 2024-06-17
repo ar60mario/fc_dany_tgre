@@ -8,7 +8,7 @@
             <generator class="identity"/>
         </id>
         <property name="codigoBarra" type="long" column="CODIGO_BARRA"/>
-        <property name="orden" type="integer" column="ORDEN"/>
+        
         <property name="activo" type="boolean" column="ACTIVO"/>
         <many-to-one name="producto"
                     class="ar.com.ventas.entities.Producto2"

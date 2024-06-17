@@ -178,7 +178,7 @@ public class VersionFrame extends javax.swing.JFrame {
     private void limpiarFrame() {
         getContentPane().setBackground(new java.awt.Color(Constantes.getR(), Constantes.getG(), Constantes.getB()));
         this.setLocationRelativeTo(null);
-        String ver2 = "VERSION: 1.3 FEBRERO 19 de 2024";
+        String ver2 = "VERSION: 1.4 JUNIO 17 de 2024";
         versionTxt.setText(ver2);
         String str1 = Globals.USR.get();
         System.out.println(str1);

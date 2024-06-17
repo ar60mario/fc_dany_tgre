@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.frame;
 
 import ar.com.ventas.entities.CodigoBarra;
@@ -23,6 +18,8 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.Time;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -39,7 +36,7 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
     private List<Rubro2> rubros;
     private List<SubRubro2> subRubros;
     private List<CodigoBarra> codigosBarra;
-    private List<PorcentajeIva>  ivas;
+    private List<PorcentajeIva> ivas;
     private DecimalFormat df3 = new DecimalFormat("#0.000");
     private DecimalFormat df2 = new DecimalFormat("#0.00");
     private MathContext precision = new MathContext(5); // example 2
@@ -1249,9 +1246,9 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             int rowSR = comboSR.getSelectedIndex();
             int rowsC = comboC.getItemCount();
             PorcentajeIva alicuota = ivas.get(rowIva);
-            Rubro2 rubro = rubros.get(rowRubro -1);
-            SubRubro2 subRubro = subRubros.get(rowSR -1);
-            Proveedor2 proveedor = proveedores.get(rowProveedor -1);
+            Rubro2 rubro = rubros.get(rowRubro - 1);
+            SubRubro2 subRubro = subRubros.get(rowSR - 1);
+            Proveedor2 proveedor = proveedores.get(rowProveedor - 1);
             int bulto = Integer.valueOf(cantidadPorBultoTxt.getText());
             int caja = Integer.valueOf(unidadCajaTxt.getText());
             int puntoPedido = Integer.valueOf(puntoPedidoTxt.getText());
@@ -1277,9 +1274,11 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             Double sugerido = Double.valueOf(sugeridoTxt.getText());
             int codigo = Integer.valueOf(codigoTxt.getText());
             Date fechaActualiz = new Date();
-            Time horaActualiz;
-            int hs = horaActualiz.getHours();
-            horaActualiz = new Time();
+            LocalDateTime horaActualiz = LocalDateTime.now();
+            int hs = horaActualiz.getHour();
+            int min = horaActualiz.getMinute();
+            Calendar cal = Calendar.getInstance();
+            
             stock.setBulto(bulto);
             stock.setCaja(caja);
             stock.setPuntoPedido(puntoPedido);
@@ -1288,7 +1287,8 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             stock.setUnidad(unidadFraccion);
             precio.setCosto(costo);
             precio.setFechaActualizacion(new Date());
-            precio.setHoraActualizacion(new Time());
+            precio.setHora(hs);
+            precio.setMinuto(min);
             precio.setImpuesto(impuesto);
             precio.setPorcentaje1(porcentaje1);
             precio.setPorcentaje2(porcentaje2);
@@ -1313,14 +1313,13 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             producto.setCodigo(codigo);
             producto.setDetalle(descripcionTxt.getText());
             producto.setFechaActualiz(fechaActualiz);
-            producto.setHoraActualiz(horaActualiz);
             producto.setListaPdf(true);
             producto.setPrecio(precio);
             producto.setProveedor(proveedor);
             producto.setRubro(rubro);
             producto.setSubRubro(subRubro);
             producto.setStock(stock);
-            
+
         }
     }
 
@@ -1348,17 +1347,17 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
             descripcionTxt.requestFocus();
             return false;
         }
-        if(precioTxt.getText().isEmpty()){
+        if (precioTxt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "INGRESE UN PRECIO");
             precioTxt.requestFocus();
             return false;
         }
-        if(costoUnitarioTxt.getText().isEmpty()){
+        if (costoUnitarioTxt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "INGRESE UN COSTO UNITARIO");
             costoUnitarioTxt.requestFocus();
             return false;
         }
-        if(porcentajeTxt.getText().isEmpty()){
+        if (porcentajeTxt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "INGRESE UN COSTO UNITARIO");
             porcentajeTxt.requestFocus();
             return false;
@@ -1402,7 +1401,7 @@ public class NuevoProductoFrame extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(NuevoProductoFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for(PorcentajeIva pi:ivas){
+        for (PorcentajeIva pi : ivas) {
             comboI.addItem(pi.getDetalle());
         }
     }

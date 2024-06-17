@@ -12,25 +12,23 @@ import java.util.Date;
  * @author argia
  */
 public class CuentaCorrienteCliente {
+
     private Long id;
-    private Date fecha;
+    private Integer codigo;
     private Double debe;
     private Double haber;
     private Double saldo;
-    private TipoComprobante tipoComprobante;
-    private Cliente2 cliente;
+    
 
     public CuentaCorrienteCliente() {
     }
 
-    public CuentaCorrienteCliente(Long id, Date fecha, Double debe, Double haber, Double saldo, TipoComprobante tipoComprobante, Cliente2 cliente) {
+    public CuentaCorrienteCliente(Long id, Integer codigo, Double debe, Double haber, Double saldo) {
         this.id = id;
-        this.fecha = fecha;
+        this.codigo = codigo;
         this.debe = debe;
         this.haber = haber;
         this.saldo = saldo;
-        this.tipoComprobante = tipoComprobante;
-        this.cliente = cliente;
     }
 
     public Long getId() {
@@ -41,12 +39,12 @@ public class CuentaCorrienteCliente {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Integer getCodigo() {
+        return codigo;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public Double getDebe() {
@@ -73,20 +71,5 @@ public class CuentaCorrienteCliente {
         this.saldo = saldo;
     }
 
-    public TipoComprobante getTipoComprobante() {
-        return tipoComprobante;
-    }
-
-    public void setTipoComprobante(TipoComprobante tipoComprobante) {
-        this.tipoComprobante = tipoComprobante;
-    }
-
-    public Cliente2 getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente2 cliente) {
-        this.cliente = cliente;
-    }
     
 }

@@ -29,16 +29,13 @@ public class Precio {
     private PorcentajeIva porcentajeIva;
     private Double sugerido;
     private Date fechaActualizacion;
-    private Time horaActualizacion;
+    private Integer hora;
+    private Integer minuto;
 
     public Precio() {
     }
 
-    public Precio(Long id, Double precio1, Double precio2, Double precio3, Double precio4, Double precio5, 
-            Double precio6, Double precio7, Float porcentaje1, Float porcentaje2, Float porcentaje3, 
-            Float porcentaje4, Float porcentaje5, Float porcentaje6, Float porcentaje7, Double impuesto, 
-            Double costo, PorcentajeIva porcentajeIva, Double sugerido, 
-            Date fechaActualizacion, Time horaActualizacion) {
+    public Precio(Long id, Double precio1, Double precio2, Double precio3, Double precio4, Double precio5, Double precio6, Double precio7, Float porcentaje1, Float porcentaje2, Float porcentaje3, Float porcentaje4, Float porcentaje5, Float porcentaje6, Float porcentaje7, Double impuesto, Double costo, PorcentajeIva porcentajeIva, Double sugerido, Date fechaActualizacion, Integer hora, Integer minuto) {
         this.id = id;
         this.precio1 = precio1;
         this.precio2 = precio2;
@@ -59,7 +56,8 @@ public class Precio {
         this.porcentajeIva = porcentajeIva;
         this.sugerido = sugerido;
         this.fechaActualizacion = fechaActualizacion;
-        this.horaActualizacion = horaActualizacion;
+        this.hora = hora;
+        this.minuto = minuto;
     }
 
     public Long getId() {
@@ -222,12 +220,20 @@ public class Precio {
         this.fechaActualizacion = fechaActualizacion;
     }
 
-    public Time getHoraActualizacion() {
-        return horaActualizacion;
+    public Integer getHora() {
+        return hora;
     }
 
-    public void setHoraActualizacion(Time horaActualizacion) {
-        this.horaActualizacion = horaActualizacion;
+    public void setHora(Integer hora) {
+        this.hora = hora;
+    }
+
+    public Integer getMinuto() {
+        return minuto;
+    }
+
+    public void setMinuto(Integer minuto) {
+        this.minuto = minuto;
     }
 
 }

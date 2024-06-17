@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.Cliente2" schema="ventas_damico" table="cliente_2">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="codigo" type="integer" column="CODIGO"/>
+        <property name="razonSocial" type="string" column="RAZON_SOCIAL"/>
+        <property name="cuit" type="string" column="CUIT"/>
+        <property name="referencia" type="string" column="REFERENCIA"/>
+        <property name="saldo" type="double" column="SALDO"/>
+        <property name="activo" type="boolean" column="ACTIVO"/>
+        <many-to-one name="tipoDocumento"
+                    class="ar.com.ventas.entities.TipoDocumento"
+                     lazy="false">
+                     <column name="ID_TIPO_DOCUMENTO" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="categoriaAfip"
+                    class="ar.com.ventas.entities.CategoriaAfip"
+                     lazy="false">
+                     <column name="ID_CATEGORIA_AFIP" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="domicilio"
+                    class="ar.com.ventas.entities.Domicilio2"
+                     lazy="false">
+                     <column name="ID_DOMICILIO_2" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

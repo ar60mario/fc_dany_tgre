@@ -40,16 +40,16 @@
     
         <!-- CADA ENTITIE QUE SE SUME SE TIENE QUE AGREGAR SU MAPEO -->
     
-        <!--mapping resource="ar/com/ventas/entities/Cliente.hbm.xml"/-->
+        <mapping resource="ar/com/ventas/entities/Cliente2.hbm.xml"/>
+        <mapping resource="ar/com/ventas/entities/CategoriaAfip.hbm.xml"/>
         <mapping resource="ar/com/ventas/entities/CodigoBarra.hbm.xml"/>
-        <!--mapping resource="ar/com/ventas/entities/ComprobanteCompras.hbm.xml"/>
-        <mapping resource="ar/com/ventas/entities/Configuracion.hbm.xml"/>
-        <mapping resource="ar/com/ventas/entities/ConfiguracionTop.hbm.xml"/>
-        <mapping resource="ar/com/ventas/entities/Domicilio.hbm.xml"/>
-        <mapping resource="ar/com/ventas/entities/Factura.hbm.xml"/>
+        <mapping resource="ar/com/ventas/entities/CuentaCorrienteCliente.hbm.xml"/>
+        <!--mapping resource="ar/com/ventas/entities/ConfiguracionTop.hbm.xml"/--> <!-- ESTE NO SE UTILIZA -->
+        <mapping resource="ar/com/ventas/entities/Domicilio2.hbm.xml"/>
+        <!--mapping resource="ar/com/ventas/entities/Factura.hbm.xml"/>
         <mapping resource="ar/com/ventas/entities/IvaVentas.hbm.xml"/-->
         <mapping resource="ar/com/ventas/entities/Producto2.hbm.xml"/>
-        <!--mapping resource="ar/com/ventas/entities/ProductoTop.hbm.xml"/-->
+        <!--mapping resource="ar/com/ventas/entities/ProductoTop.hbm.xml"/--> <!-- ESTE NO SE UTILIZA -->
         <mapping resource="ar/com/ventas/entities/Precio.hbm.xml"/>
         <mapping resource="ar/com/ventas/entities/Proveedor2.hbm.xml"/>
         <mapping resource="ar/com/ventas/entities/PorcentajeIva.hbm.xml"/>
@@ -59,8 +59,9 @@
         <mapping resource="ar/com/ventas/entities/Rubro2.hbm.xml"/>
         <mapping resource="ar/com/ventas/entities/Stock.hbm.xml"/>
         <mapping resource="ar/com/ventas/entities/SubRubro2.hbm.xml"/>
-        <!--mapping resource="ar/com/ventas/entities/TicketTime.hbm.xml"/>
-        <mapping resource="ar/com/ventas/entities/TipoDoc.hbm.xml"/-->
+        <!--mapping resource="ar/com/ventas/entities/TicketTime.hbm.xml"/--> <!-- ESTE NO SE UTILIZA -->
+        <mapping resource="ar/com/ventas/entities/TipoComprobante.hbm.xml"/>
+        <mapping resource="ar/com/ventas/entities/TipoDocumento.hbm.xml"/>
         <mapping resource="ar/com/ventas/entities/EquipoActivo.hbm.xml"/>
         <mapping resource="ar/com/ventas/entities/MenuByPerfil.hbm.xml"/>
         <mapping resource="ar/com/ventas/entities/Perfil.hbm.xml"/>

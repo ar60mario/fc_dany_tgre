@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.CuentaCorrienteCliente" schema="ventas_damico" table="cuenta_corriente_cliente">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="codigo" type="integer" column="CODIGO"/>
+        <property name="debe" type="double" column="DEBE"/>
+        <property name="haber" type="double" column="HABER"/>
+        <property name="saldo" type="double" column="SALDO"/>
+        
+    </class>
+</hibernate-mapping>
